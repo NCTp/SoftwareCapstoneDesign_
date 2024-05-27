@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
@@ -10,6 +12,7 @@ public class Player : MonoBehaviour, IDamageable
     public float jumpForce = 100.0f;
 
     private Rigidbody _rb;
+    private SphereCollider _sphereCollider;
     private float _health;
     private float _energy;
 
@@ -25,6 +28,25 @@ public class Player : MonoBehaviour, IDamageable
     public float GetHealth()
     {
         return _health;
+    }
+    public void AddHealth(float amount)
+    {
+        _health += amount;
+        if(_health >= maxHealth) _health = maxHealth;
+    }
+    public float GetEnergy()
+    {
+        return _energy;
+    }
+    public void AddEnergy(float amount)
+    {
+        _energy += amount;
+        if(_energy >= 100)
+        {
+            _level += 1;
+            _energy -= 100;
+        }
+        
     }
     public void ResetRigidbody()
     {
@@ -60,6 +82,7 @@ public class Player : MonoBehaviour, IDamageable
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _sphereCollider = GetComponent<SphereCollider>();
         _health = maxHealth;
         _level = 1;
     }
@@ -75,6 +98,13 @@ public class Player : MonoBehaviour, IDamageable
     {
         Move();
         if(Input.GetKeyDown(KeyCode.E)) _health -= 10.0f;
-
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("Collision!");
+    }
+    
+
+    
 }
