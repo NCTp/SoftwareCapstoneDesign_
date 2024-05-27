@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    public float maxHealth;
+    public float scrabs;
     public float speed = 5.0f;
     public float jumpForce = 100.0f;
 
     private Rigidbody _rb;
     private float _health;
+    private float _energy;
+
     private int _level;
 
     private bool isGrounded = true;
@@ -16,22 +20,18 @@ public class Player : MonoBehaviour, IDamageable
 
     public void GetDamage(DamageMessage damageMessage)
     {
-        Debug.Log("!");
+        _health -= damageMessage.amount;
     }
-
-    void Awake()
+    public float GetHealth()
     {
-        _rb = GetComponent<Rigidbody>();
+        return _health;
     }
-
-    // Start is called before the first frame update
-    void Start()
+    public void ResetRigidbody()
     {
-        
+        _rb.velocity = Vector3.zero;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Move()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -47,13 +47,34 @@ public class Player : MonoBehaviour, IDamageable
         if(Physics.Raycast(transform.position, Vector3.down, out _hitInfo, 0.6f))
         {
             isGrounded = true;
-            Debug.Log("Grounded!");
+            //Debug.Log("Grounded!");
         }
         else
         {
             isGrounded = false;
-            Debug.Log("Not Grounded!");
+            //Debug.Log("Not Grounded!");
         }
+
+    }
+
+    void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+        _health = maxHealth;
+        _level = 1;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Move();
+        if(Input.GetKeyDown(KeyCode.E)) ResetRigidbody();
 
     }
 }
