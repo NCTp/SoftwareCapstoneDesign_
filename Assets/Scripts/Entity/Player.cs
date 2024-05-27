@@ -74,7 +74,7 @@ public class Player : MonoBehaviour, IDamageable
     void Update()
     {
         Move();
-        if(Input.GetKeyDown(KeyCode.E)) ResetRigidbody();
+        if(Input.GetKeyDown(KeyCode.E)) _health -= 10.0f;
 
     }
 }
