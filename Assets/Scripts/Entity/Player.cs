@@ -48,9 +48,13 @@ public class Player : MonoBehaviour, IDamageable
         }
         
     }
-    public void ResetRigidbody()
+    public void RigidbodyReset()
     {
         _rb.velocity = Vector3.zero;
+    }
+    public void RigidbodyAddForce()
+    {
+        _rb.AddForce(0.0f, jumpForce, 0.0f);
     }
 
     private void Move()
@@ -61,15 +65,14 @@ public class Player : MonoBehaviour, IDamageable
         Vector3 direction = new Vector3(horizontal, 0.0f, vertical);
 
         _rb.AddForce(direction * speed);
-
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             _rb.AddForce(0.0f, jumpForce, 0.0f);
         }
-        if(Physics.Raycast(transform.position, Vector3.down, out _hitInfo, 0.6f))
+        if(Physics.Raycast(transform.position, Vector3.down, out _hitInfo, transform.localScale.x/2 + 0.2f))
         {
             isGrounded = true;
-            //Debug.Log("Grounded!");
+            //Debug.Log(transform.localScale.x);
         }
         else
         {
@@ -102,7 +105,11 @@ public class Player : MonoBehaviour, IDamageable
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Collision!");
+        if(other.gameObject.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            enemy.GetDamage(new DamageMessage(gameObject, 3.0f));
+        }
     }
     
 

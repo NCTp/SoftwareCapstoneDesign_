@@ -52,16 +52,37 @@ public class CamFollow : MonoBehaviour
 
     }
 
-    void CamZoomIn(float amount)
+    void CamZoomIn(float amount, float time)
     {
-        Camera.main.fieldOfView -= amount;
+        StartCoroutine(CamZoomInCoroutine(amount, time));
+    }
+    IEnumerator CamZoomInCoroutine(float amount, float time)
+    {
+        float timer = time;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            Camera.main.fieldOfView -= amount * Time.deltaTime;
+            yield return null;
 
+        }
     }
 
-    void CamZoomOut(float amount)
+    void CamZoomOut(float amount, float time)
     {
-        Camera.main.fieldOfView += amount;
+        StartCoroutine(CamZoomOutCoroutine(amount, time));
 
+    }
+    IEnumerator CamZoomOutCoroutine(float amount, float time)
+    {
+        float timer = time;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            Camera.main.fieldOfView += amount * Time.deltaTime;
+            yield return null;
+
+        }
     }
 
     void Awake()
@@ -72,13 +93,15 @@ public class CamFollow : MonoBehaviour
     void Start()
     {
         //CamShake(0.1f, 1.0f);
+        //CamZoomIn(100.0f, 0.2f);
     }
 
     // Update is called once per frame
     void Update()
     {
         FollowPlayer();
-        
+        //if(Input.GetKey(KeyCode.E)) CamZoomOut(5.0f);
+        //if(Input.GetKey(KeyCode.Q)) CamZoomIn(50.0f, 5.0f);
 
     }
 }
