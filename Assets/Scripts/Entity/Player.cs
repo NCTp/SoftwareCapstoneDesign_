@@ -6,10 +6,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    
     public float maxHealth;
-    public float scrabs;
+    public float scrabs = 0;
     public float speed = 5.0f;
+    public float chargeSpeed = 50.0f;
     public float jumpForce = 100.0f;
+    public float collisionDamage = 3.0f;
+
+    public Weapon weapon;
+    public GameObject chargeTarget;
 
     private Rigidbody _rb;
     private SphereCollider _sphereCollider;
@@ -19,6 +25,7 @@ public class Player : MonoBehaviour, IDamageable
     private int _level;
 
     private bool isGrounded = true;
+    private bool isCharging = false;
     private RaycastHit _hitInfo;
 
     public void GetDamage(DamageMessage damageMessage)
@@ -61,6 +68,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+        //if(horizontal == vertical) RigidbodyReset();
 
         Vector3 direction = new Vector3(horizontal, 0.0f, vertical);
 
@@ -80,6 +88,38 @@ public class Player : MonoBehaviour, IDamageable
             //Debug.Log("Not Grounded!");
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            _rb.AddForce(direction * chargeSpeed / 2);
+        }
+        
+
+    }
+    
+
+    public void SetChargeTarget(GameObject gameObject)
+    {
+        chargeTarget = gameObject;
+        chargeTarget.GetComponent<Markable>().SetActiveMark();
+    }
+
+    public void DeleteTarget()
+    {
+        chargeTarget.GetComponent<Markable>().SetInActiveMark();
+        chargeTarget = null;
+    }
+
+    private void Charge(GameObject chargeTarget)
+    {
+        // 특정된 타겟을 향해 돌진
+        if (chargeTarget != null)
+        {
+            Vector3 direction = chargeTarget.transform.position - transform.position;
+            direction.Normalize();
+            //transform.position += direction * chargeSpeed * Time.deltaTime;
+            _rb.AddForce(direction * chargeSpeed);
+        }
+        
     }
 
     void Awake()
@@ -100,7 +140,20 @@ public class Player : MonoBehaviour, IDamageable
     void Update()
     {
         Move();
+        if (chargeTarget != null)
+        {
+            chargeTarget.GetComponent<Markable>().SetActiveMark();
+        }
         if(Input.GetKeyDown(KeyCode.E)) _health -= 10.0f;
+        if (Input.GetMouseButton(0))
+        {
+            //RigidbodyReset();
+            if (chargeTarget != null)
+            {
+                RigidbodyReset();
+                Charge(chargeTarget);
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -108,7 +161,8 @@ public class Player : MonoBehaviour, IDamageable
         if(other.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            enemy.GetDamage(new DamageMessage(gameObject, 3.0f));
+            enemy.GetDamage(new DamageMessage(gameObject, collisionDamage));
+
         }
     }
     

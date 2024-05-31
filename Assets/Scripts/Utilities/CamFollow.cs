@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CamFollow : MonoBehaviour
 {
+    public float mouseSensitivity = 100.0f;
 
     public Vector3 positionOffSet;
     public Vector3 directionOffSet;
@@ -15,11 +18,14 @@ public class CamFollow : MonoBehaviour
     private RaycastHit _hitInfo;
     private float _rotationSpeed = 10.0f;
 
+    private float rotationX =0.0f, rotationY=0.0f;
+
     void FollowPlayer()
     {
         transform.position = Target.transform.position + positionOffSet;
         _targetDirection = 
         ((Target.transform.position + directionOffSet) - transform.position).normalized; // 카메라 연출을 위한 OffSet 추가
+        
         _targetRotation = Quaternion.LookRotation(_targetDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, _rotationSpeed);
 
@@ -28,6 +34,18 @@ public class CamFollow : MonoBehaviour
         {
             //Debug.Log("Wall Detected");
         }
+    }
+
+    void RotateCam()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        rotationY += mouseX * Time.deltaTime;
+        rotationX -= mouseY * Time.deltaTime;
+        rotationY = Mathf.Clamp(rotationY, -60f, 60f);
+        rotationX = Mathf.Clamp(rotationX, -60f, 60f);
+        transform.eulerAngles = new Vector3(rotationX, rotationY, 0.0f);
+
     }
 
     void CamShake(float amount, float time)
@@ -52,7 +70,7 @@ public class CamFollow : MonoBehaviour
 
     }
 
-    void CamZoomIn(float amount, float time)
+    public void CamZoomIn(float amount, float time)
     {
         StartCoroutine(CamZoomInCoroutine(amount, time));
     }
@@ -68,7 +86,7 @@ public class CamFollow : MonoBehaviour
         }
     }
 
-    void CamZoomOut(float amount, float time)
+    public void CamZoomOut(float amount, float time)
     {
         StartCoroutine(CamZoomOutCoroutine(amount, time));
 
@@ -100,8 +118,10 @@ public class CamFollow : MonoBehaviour
     void Update()
     {
         FollowPlayer();
+        RotateCam();
         //if(Input.GetKey(KeyCode.E)) CamZoomOut(5.0f);
         //if(Input.GetKey(KeyCode.Q)) CamZoomIn(50.0f, 5.0f);
+
 
     }
 }

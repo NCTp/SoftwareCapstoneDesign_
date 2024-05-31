@@ -9,8 +9,9 @@ public class Weapon : MonoBehaviour
     public Transform muzzle;
     public GameObject target;
     private RaycastHit _hitInfo;
+    private Camera _mainCamera;
 
-    void ShootRayCast()
+    public void ShootRayCast()
     {
         int layerMask = (-1) - (1 << LayerMask.NameToLayer("NoDetectionFromPlayer"));
         if(Physics.Raycast(
@@ -21,13 +22,14 @@ public class Weapon : MonoBehaviour
         layerMask))
         {
             GameObject hitObject = _hitInfo.collider.gameObject;
-            if(hitObject.CompareTag("Enemy"))
+            if (hitObject != null)
             {
-                Debug.Log("Enemy");
+                if(hitObject.CompareTag("Enemy"))
+                {
+                    Debug.Log("Enemy");
+                }
             }
-
         }
-
     }
     // Start is called before the first frame update
     void Start()
@@ -38,7 +40,6 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ShootRayCast();
         
     }
 }
