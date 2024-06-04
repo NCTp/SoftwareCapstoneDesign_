@@ -238,6 +238,7 @@ MonoBehaviour:
   collisionDamage: 3
   fireRate: 0.1
   direction: {x: 0, y: 0, z: 0}
+  chargeCoolTime: 5
   weapon: {fileID: 2644548751504579328}
   chargeTarget: {fileID: 0}
   Wheel: {fileID: 811077162546088142}

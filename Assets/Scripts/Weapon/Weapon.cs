@@ -14,7 +14,9 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
-        GameObject _projectile = Instantiate(projectile, muzzle.position, transform.rotation);
+        GameObject _projectile = Instantiate(projectile, muzzle.position, muzzle.rotation);
+        _projectile.GetComponent<Rigidbody>().velocity =
+            transform.forward * _projectile.GetComponent<Projectile>().speed;
     }
     
     // Start is called before the first frame update
@@ -26,10 +28,12 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (target == null)
+        if (target != null)
         {
-            //Vector3 dir = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
-            //transform.LookAt(dir);
+            transform.LookAt(target.transform);
+        }
+        else
+        {
             transform.rotation = Camera.main.transform.rotation;
         }
     }

@@ -17,6 +17,7 @@ public class Player : MonoBehaviour, IDamageable
     public float collisionDamage = 3.0f;
     public float fireRate = 1.0f;
     public Vector3 direction;
+    public float chargeCoolTime = 1.0f;
 
     public Weapon weapon;
     public GameObject chargeTarget;
@@ -31,9 +32,10 @@ public class Player : MonoBehaviour, IDamageable
     private float _gravityValue = -9.81f;
     private int _level;
     private float _nextFireTime = 0.0f;
+    private float _nextChargeTime = 0.0f;
 
     private bool _isGrounded = true;
-    private bool isCharging = false;
+    private bool _isCharging = false;
     private RaycastHit _hitInfo;
 
     public void GetDamage(DamageMessage damageMessage)
@@ -131,9 +133,10 @@ public class Player : MonoBehaviour, IDamageable
         _controller.Move(direction * Time.deltaTime);
     }
     
-    public void SetChargeTarget(GameObject gameObject)
+    public void SetTarget(GameObject gameObject)
     {
         chargeTarget = gameObject;
+        weapon.target = gameObject;
         chargeTarget.GetComponent<Markable>().SetActiveMark();
     }
 
@@ -141,24 +144,27 @@ public class Player : MonoBehaviour, IDamageable
     {
         chargeTarget.GetComponent<Markable>().SetInActiveMark();
         chargeTarget = null;
+        weapon.target = null;
     }
 
     private void Charge(GameObject chargeTarget)
     {
-        // 특정된 타겟을 향해 돌진
-        if (chargeTarget != null)
-        {
-            Vector3 _direction = chargeTarget.transform.position - transform.position;
-            direction.Normalize();
-            transform.position += _direction * chargeSpeed * Time.deltaTime;
-
-        }
-        
     }
 
     private void Fire()
     {
         weapon.Fire();
+    }
+
+    private void AddCoolTime()
+    {
+        if(_nextChargeTime <= chargeCoolTime) _nextChargeTime += Time.deltaTime;
+        Debug.Log(_nextChargeTime);
+    }
+
+    public void ResetCoolTime()
+    {
+        _nextChargeTime = chargeCoolTime;
     }
 
     void Awake()
@@ -169,6 +175,7 @@ public class Player : MonoBehaviour, IDamageable
         _health = maxHealth;
         _level = 1;
         _speed = speed;
+        _nextChargeTime = chargeCoolTime;
     }
 
     // Start is called before the first frame update
@@ -180,28 +187,41 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        AddCoolTime();
         if (Input.GetMouseButton(0) && Time.time > _nextFireTime)
         {
             _nextFireTime = Time.time + fireRate;
             Fire();
         }
-        Move2();
+        /// Charging Codes Start
+        
+        if (Input.GetKeyDown(KeyCode.E) && chargeTarget && _nextChargeTime >= chargeCoolTime)
+        {
+            //Debug.Log("C");
+            _isCharging = true;
+            _nextChargeTime = 0.0f;
+        }
+        if (_isCharging)
+        {
+            if (chargeTarget)
+            {
+                Vector3 direction = (chargeTarget.transform.position - transform.position).normalized;
+                _controller.Move(direction * chargeSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            Move2();
+        }
         if (chargeTarget != null)
         {
             chargeTarget.GetComponent<Markable>().SetActiveMark();
         }
-        if(Input.GetKeyDown(KeyCode.E)) _health -= 10.0f;
-        /*
-        if (Input.GetMouseButton(0))
-        {
-            //RigidbodyReset();
-            if (chargeTarget != null)
-            {
-                RigidbodyReset();
-                Charge(chargeTarget);
-            }
-        }
-        */
+        /// Charging Codes End
+
+        if (Input.GetKeyDown(KeyCode.E)) _health -= 10.0f;
+
+        
     }
 
     private void OnCollisionEnter(Collision other)
@@ -209,9 +229,8 @@ public class Player : MonoBehaviour, IDamageable
         if(other.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            Debug.Log("DD");
             enemy.GetDamage(new DamageMessage(gameObject, collisionDamage));
-
+            if (_isCharging) _isCharging = false;
         }
     }
     

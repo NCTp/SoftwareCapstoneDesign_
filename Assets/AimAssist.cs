@@ -34,7 +34,13 @@ public class AimAssist : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            player.GetComponent<Player>().SetChargeTarget(other.gameObject);
+            Enemy enemy = other.GetComponent<Enemy>();
+            if(enemy.health <= player.GetComponent<Player>().collisionDamage) 
+                player.GetComponent<Player>().SetTarget(other.gameObject);
+            else
+            {
+                player.GetComponent<Player>().SetTarget(other.gameObject);
+            }
         }
     }
 

@@ -5,19 +5,27 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    public float _health = 5.0f;
+    public float health = 5.0f;
     public float score = 1.0f;
     private GameObject _target;
     private NavMeshAgent _navMeshAgent;
 
     public void GetDamage(DamageMessage damageMessage)
     {
-        _health -= damageMessage.amount;
-        if(_health <= 0) Dead();
+        health -= damageMessage.amount;
+        if (health <= 0)
+        {
+            if (damageMessage.damager.gameObject.CompareTag("Player"))
+            {
+                damageMessage.damager.gameObject.GetComponent<Player>().ResetCoolTime();
+            }
+            Dead();
+            
+        }
     }
     public float GetHealth()
     {
-        return _health;
+        return health;
     }
     private void Dead()
     {
