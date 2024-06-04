@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    float _health = 5.0f;
+    public float _health = 5.0f;
     public float score = 1.0f;
     private GameObject _target;
     private NavMeshAgent _navMeshAgent;
@@ -13,12 +13,8 @@ public class Enemy : MonoBehaviour, IDamageable
     public void GetDamage(DamageMessage damageMessage)
     {
         _health -= damageMessage.amount;
-        damageMessage.damager.GetComponent<Player>().RigidbodyReset();
-        damageMessage.damager.GetComponent<Player>().RigidbodyAddForce();
         if(_health <= 0) Dead();
     }
-
-
     public float GetHealth()
     {
         return _health;

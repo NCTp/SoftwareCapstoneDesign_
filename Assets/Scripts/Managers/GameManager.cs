@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public void AddScore(float points)
     {

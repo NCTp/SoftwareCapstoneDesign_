@@ -42,8 +42,8 @@ public class CamFollow : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
         rotationY += mouseX * Time.deltaTime;
         rotationX -= mouseY * Time.deltaTime;
-        rotationY = Mathf.Clamp(rotationY, -60f, 60f);
-        rotationX = Mathf.Clamp(rotationX, -60f, 60f);
+        rotationY = Mathf.Clamp(rotationY, -90f, 90f);
+        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
         transform.eulerAngles = new Vector3(rotationX, rotationY, 0.0f);
 
     }

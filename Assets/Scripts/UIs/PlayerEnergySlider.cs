@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthSlider : MonoBehaviour
+public class PlayerEnergySlider : MonoBehaviour
 {
-    public Slider healthSlider;
+    public Slider energySlider;
     private GameObject _player;
     void Awake()
     {
@@ -20,6 +20,6 @@ public class PlayerHealthSlider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthSlider.value = _player.GetComponent<Player>().GetHealth();
+        energySlider.value = _player.GetComponent<Player>().GetEnergy();
     }
 }
