@@ -5,9 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public float score;
-
-    public float stage;
+    
+    private float _score;
+    private int _stage = 1;
+    private int _level = 1;
+    private float _exp = 0.0f;
+    
     void Awake()
     {
         // 싱글톤 설정
@@ -23,15 +26,36 @@ public class GameManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        _stage = 1;
     }
     public void AddScore(float points)
     {
-        score += points;
+        _score += points;
     }
 
     public float GetScore()
     {
-        return score;
+        return _score;
+    }
+
+    public int GetStage()
+    {
+        return _stage;
+    }
+
+    public int GetLevel()
+    {
+        return _level;
+    }
+
+    public void AddExp(float amount)
+    {
+        _exp += amount;
+        if (_exp >= 100.0f)
+        {
+            _level += 1;
+            _exp -= 100.0f;
+        }
     }
 
 // Start is called before the first frame update

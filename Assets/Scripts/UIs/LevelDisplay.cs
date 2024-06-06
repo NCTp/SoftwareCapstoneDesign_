@@ -4,14 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreDisplay : MonoBehaviour
+public class LevelDisplay : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;
-    
-
+    public TextMeshProUGUI levelText;
     void Awake()
     {
-        //_scoreText = GetComponent<TextMeshProUGUI>();
+        
     }
     // Start is called before the first frame update
     void Start()
@@ -22,7 +20,7 @@ public class ScoreDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float score = GameManager.instance.GetScore();
-        scoreText.text = score.ToString();
+        float level = GameManager.instance.GetLevel();
+        levelText.text = level.ToString();
     }
 }

@@ -4,15 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreDisplay : MonoBehaviour
+public class StageDisplay : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;
-    
-
-    void Awake()
-    {
-        //_scoreText = GetComponent<TextMeshProUGUI>();
-    }
+    public TextMeshProUGUI stageText;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +16,7 @@ public class ScoreDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float score = GameManager.instance.GetScore();
-        scoreText.text = score.ToString();
+        float stage = GameManager.instance.GetStage();
+        stageText.text = stage.ToString();
     }
 }
