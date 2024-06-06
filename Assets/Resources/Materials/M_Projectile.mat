@@ -7,13 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_EnemyRed
-  m_Shader: {fileID: 4800000, guid: a9a8211f737bfbd4fb8a469399c59177, type: 3}
+  m_Name: M_Projectile
+  m_Shader: {fileID: 4800000, guid: 8842c84d9ff79e24abe4295f91ae4a7a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_InvalidKeywords:
+  - _EMISSION
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -63,6 +64,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Normal1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -80,14 +89,15 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EdgeWidth: 0.05
-    - _FresnelPower: 3
+    - _EdgeWidth: 0.056
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _NormalStrength: 0.25
+    - _NormalStrength1: 0.17
+    - _NormalStrength2: 0.8
     - _OcclusionStrength: 1
     - _OutlineWidth: 0.04
     - _Parallax: 0.02
@@ -100,13 +110,15 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BoxDims: {r: 5, g: 5, b: 5, a: 1}
-    - _Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Emission1: {r: 1.7411441, g: 1.7411441, b: 1.7411441, a: 1}
-    - _Emission2: {r: 0, g: 2.361029, b: 3.0470023, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Emission1: {r: 2.56, g: 0, b: 0, a: 1}
+    - _Emission2: {r: 0, g: 1.95, b: 2.52, a: 1}
+    - _EmissionColor: {r: 1.6226414, g: 1.6226414, b: 1.6226414, a: 1}
     - _FlowDirection: {r: 1, g: 0, b: 0, a: 0}
-    - _OutlineColor: {r: 1, g: 0.5613208, b: 0.5613208, a: 1}
-    - _ScrollDirection: {r: 0, g: 0, b: 0, a: 0}
+    - _FlowDirection1: {r: 0.05, g: 0, b: 0, a: 1}
+    - _FlowDirection2: {r: 0, g: 0.05, b: 0, a: 1}
+    - _MovementDirection: {r: 0, g: -1, b: 0, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _WindDirection: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

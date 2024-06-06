@@ -147,8 +147,30 @@ public class Player : MonoBehaviour, IDamageable
         weapon.target = null;
     }
 
-    private void Charge(GameObject chargeTarget)
+    private void Charge()
     {
+        if (Input.GetKeyDown(KeyCode.E) && chargeTarget && _nextChargeTime >= chargeCoolTime)
+        {
+            //Debug.Log("C");
+            _isCharging = true;
+            _nextChargeTime = 0.0f;
+        }
+        if (_isCharging)
+        {
+            if (chargeTarget)
+            {
+                Vector3 direction = (chargeTarget.transform.position - transform.position).normalized;
+                _controller.Move(direction * chargeSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            Move2();
+        }
+        if (chargeTarget != null)
+        {
+            chargeTarget.GetComponent<Markable>().SetActiveMark();
+        }
     }
 
     private void Fire()
@@ -159,7 +181,6 @@ public class Player : MonoBehaviour, IDamageable
     private void AddCoolTime()
     {
         if(_nextChargeTime <= chargeCoolTime) _nextChargeTime += Time.deltaTime;
-        Debug.Log(_nextChargeTime);
     }
 
     public void ResetCoolTime()
@@ -193,31 +214,7 @@ public class Player : MonoBehaviour, IDamageable
             _nextFireTime = Time.time + fireRate;
             Fire();
         }
-        /// Charging Codes Start
-        
-        if (Input.GetKeyDown(KeyCode.E) && chargeTarget && _nextChargeTime >= chargeCoolTime)
-        {
-            //Debug.Log("C");
-            _isCharging = true;
-            _nextChargeTime = 0.0f;
-        }
-        if (_isCharging)
-        {
-            if (chargeTarget)
-            {
-                Vector3 direction = (chargeTarget.transform.position - transform.position).normalized;
-                _controller.Move(direction * chargeSpeed * Time.deltaTime);
-            }
-        }
-        else
-        {
-            Move2();
-        }
-        if (chargeTarget != null)
-        {
-            chargeTarget.GetComponent<Markable>().SetActiveMark();
-        }
-        /// Charging Codes End
+        Charge();
 
         if (Input.GetKeyDown(KeyCode.E)) _health -= 10.0f;
 
