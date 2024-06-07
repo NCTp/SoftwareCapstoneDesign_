@@ -20,7 +20,8 @@ public class Player : MonoBehaviour, IDamageable
     public float chargeCoolTime = 1.0f;
 
     public Weapon weapon;
-    public GameObject chargeTarget;
+    //public GameObject chargeTarget;
+    private GameObject _lockOnTarget;
     public GameObject Wheel;
 
     private Rigidbody _rb;
@@ -135,21 +136,29 @@ public class Player : MonoBehaviour, IDamageable
     
     public void SetTarget(GameObject gameObject)
     {
-        chargeTarget = gameObject;
-        weapon.target = gameObject;
-        chargeTarget.GetComponent<Markable>().SetActiveMark();
+
+        //chargeTarget = gameObject;
+        if(_lockOnTarget == null)
+        {
+            weapon.target = gameObject;
+            _lockOnTarget = gameObject;
+            _lockOnTarget.GetComponent<Markable>().SetActiveMark();
+        }
     }
 
     public void DeleteTarget()
     {
-        chargeTarget.GetComponent<Markable>().SetInActiveMark();
-        chargeTarget = null;
-        weapon.target = null;
+        if(_lockOnTarget)
+        {
+            _lockOnTarget.GetComponent<Markable>().SetInActiveMark();
+            _lockOnTarget = null;
+            weapon.target = null;
+        }
     }
 
     private void Charge()
     {
-        if (Input.GetKeyDown(KeyCode.E) && chargeTarget && _nextChargeTime >= chargeCoolTime)
+        if (Input.GetKeyDown(KeyCode.E) && _lockOnTarget && _nextChargeTime >= chargeCoolTime)
         {
             //Debug.Log("C");
             _isCharging = true;
@@ -157,9 +166,9 @@ public class Player : MonoBehaviour, IDamageable
         }
         if (_isCharging)
         {
-            if (chargeTarget)
+            if (_lockOnTarget)
             {
-                Vector3 direction = (chargeTarget.transform.position - transform.position).normalized;
+                Vector3 direction = (_lockOnTarget.transform.position - transform.position).normalized;
                 _controller.Move(direction * chargeSpeed * Time.deltaTime);
             }
         }
@@ -167,9 +176,9 @@ public class Player : MonoBehaviour, IDamageable
         {
             Move2();
         }
-        if (chargeTarget != null)
+        if (_lockOnTarget != null)
         {
-            chargeTarget.GetComponent<Markable>().SetActiveMark();
+            _lockOnTarget.GetComponent<Markable>().SetActiveMark();
         }
     }
 

@@ -216,7 +216,7 @@ SphereCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.77
+  m_Radius: 0.62
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8796791048705917528
 MonoBehaviour:
@@ -241,7 +241,6 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   chargeCoolTime: 5
   weapon: {fileID: 2644548751504579328}
-  chargeTarget: {fileID: 0}
   Wheel: {fileID: 811077162546088142}
 --- !u!54 &7175910249113727162
 Rigidbody:

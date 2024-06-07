@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     public float health = 5.0f;
     public float score = 1.0f;
-    private GameObject _target;
-    private NavMeshAgent _navMeshAgent;
+    protected GameObject _target;
+    protected NavMeshAgent _navMeshAgent;
 
     public void GetDamage(DamageMessage damageMessage)
     {

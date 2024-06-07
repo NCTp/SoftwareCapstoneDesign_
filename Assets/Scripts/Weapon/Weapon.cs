@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
-        GameObject _projectile = Instantiate(projectile, muzzle.position, muzzle.rotation);
+        GameObject _projectile = Instantiate(projectile, transform.position, transform.rotation);
         _projectile.GetComponent<Rigidbody>().velocity =
             transform.forward * _projectile.GetComponent<Projectile>().speed;
     }
