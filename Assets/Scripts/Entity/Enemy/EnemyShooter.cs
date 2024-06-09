@@ -7,14 +7,17 @@ public class EnemyShooter : Enemy
 {
     private RaycastHit _hitInfo;
     private Vector3 _targetDir;
+    private bool _canAttack = true;
     private bool _isLockedOn = false;
     private float _lockedOnTime = 0.0f;
+    private float _attackReadyTime = 0.0f;
     private LineRenderer _lineRenderer;
     public float rayRange = 10.0f;
     public float damage = 10.0f;
     public float fireRate = 5.0f;
     public GameObject muzzle;
     public GameObject rayEffects;
+    public GameObject projectile;
     void Fire()
     {
         _targetDir = (_target.transform.position - muzzle.transform.position).normalized;
@@ -22,20 +25,30 @@ public class EnemyShooter : Enemy
         {
             if(_hitInfo.collider.gameObject.CompareTag("Player"))
             {
-                Debug.Log(_lockedOnTime);
+                //Debug.Log(_lockedOnTime);
                 _lineRenderer.enabled = true;
-                rayEffects.transform.position = _hitInfo.point;
+                //rayEffects.transform.position = _hitInfo.point;
                 //rayEffects.transform.rotation = Quaternion.LookRotation(_hitInfo.normal);
                 _lineRenderer.startWidth = _lockedOnTime * 0.1f;
                 _lockedOnTime += Time.deltaTime;
                 if(_lockedOnTime >= fireRate) 
                 {
-                    _hitInfo.collider.gameObject.GetComponent<Player>().GetDamage(new DamageMessage(gameObject,damage));
-                    _lockedOnTime = 0.0f;
+                    //_hitInfo.collider.gameObject.GetComponent<Player>().GetDamage(new DamageMessage(gameObject,damage));
+                    GameObject _projectile = Instantiate(projectile, transform.position, transform.rotation); // 투사체 발사
+                    _projectile.GetComponent<Rigidbody>().velocity =
+                        transform.forward * _projectile.GetComponent<Projectile>().speed;
+                    _lockedOnTime = 0.0f; // 락온 시간 초기화
+                    _canAttack = false; // 공격 불가능한 상태로.
+                    _lineRenderer.enabled = false; // 레이저 제거
+                    rayEffects.SetActive(false); // ray 닿은 시점 이펙트 제거
                 }
-                rayEffects.SetActive(true);
-                _lineRenderer.SetPosition(0, muzzle.transform.position);
-                _lineRenderer.SetPosition(1, rayEffects.transform.position);
+                else
+                {
+                    rayEffects.SetActive(true);
+                    rayEffects.transform.position = _hitInfo.point;
+                    _lineRenderer.SetPosition(0, muzzle.transform.position);
+                    _lineRenderer.SetPosition(1, rayEffects.transform.position);
+                }
             }
             else
             {
@@ -62,7 +75,17 @@ public class EnemyShooter : Enemy
     // Update is called once per frame
     void Update()
     {
-        Fire();
+        if(_canAttack) Fire();
+        else
+        {
+            _attackReadyTime += Time.deltaTime;
+            if (_attackReadyTime >= fireRate)
+            {
+                _canAttack = true;
+                _attackReadyTime = 0.0f;
+            }
+        }
+        
         if (_target != null)
         {
             _navMeshAgent.SetDestination(_target.transform.position);
