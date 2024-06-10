@@ -112,7 +112,11 @@ public class Player : MonoBehaviour, IDamageable
         float vertical = Input.GetAxis("Vertical");
         //if(horizontal == vertical) RigidbodyReset();
         if (horizontal == 0 && vertical == 0)
+        {
             _speed = speed;
+            Wheel.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            Wheel.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        }
         if (_isGrounded)
         {
             direction = new Vector3(horizontal, 0.0f, vertical);
@@ -130,7 +134,9 @@ public class Player : MonoBehaviour, IDamageable
         }
         direction.y += _gravityValue * 50.0f * Time.deltaTime;
         Vector3 rotationDirection = new Vector3(vertical, 0.0f, -horizontal);
-        Wheel.transform.Rotate(rotationDirection * 500.0f * Time.deltaTime);
+        Wheel.GetComponent<Rigidbody>().AddTorque(rotationDirection * speed, ForceMode.Impulse);
+        //Wheel.transform.Rotate(rotationDirection * 500.0f * Time.deltaTime);
+        
         _controller.Move(direction * Time.deltaTime);
     }
     
