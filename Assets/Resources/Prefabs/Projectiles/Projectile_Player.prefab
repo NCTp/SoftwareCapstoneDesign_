@@ -103,6 +103,7 @@ MonoBehaviour:
   speed: 500
   damage: 0.5
   projectileType: 0
+  hitEffect: {fileID: 1429954232896169633, guid: c36ced569689e4dbd99a9198916e088a, type: 3}
 --- !u!114 &2895891954667267138
 MonoBehaviour:
   m_ObjectHideFlags: 0

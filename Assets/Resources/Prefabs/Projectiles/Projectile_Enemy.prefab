@@ -103,6 +103,7 @@ MonoBehaviour:
   speed: 500
   damage: 10
   projectileType: 1
+  hitEffect: {fileID: 1429954232896169633, guid: c36ced569689e4dbd99a9198916e088a, type: 3}
 --- !u!114 &2895891954667267138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 309908454665629572, guid: e3e4ca24b623d7345a11372044842f59, type: 3}
       propertyPath: m_Intensity
-      value: 1.887003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 496487244642044104, guid: e3e4ca24b623d7345a11372044842f59, type: 3}
       propertyPath: m_IsActive

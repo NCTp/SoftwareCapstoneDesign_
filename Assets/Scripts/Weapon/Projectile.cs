@@ -38,12 +38,14 @@ public class Projectile : MonoBehaviour
                 {
                     Debug.Log("EnemyDamaged");
                     enemy.GetDamage(new DamageMessage(gameObject, damage));
+                    GameObject _hitEffect = Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
                     Destroy(gameObject);
                 }
             }
             else if (other.gameObject.CompareTag("Wall"))
             {
                 Debug.Log("Wall Detected");
+                GameObject _hitEffect = Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
         }
@@ -56,16 +58,17 @@ public class Projectile : MonoBehaviour
                 {
                     Debug.Log("PlayerDamaged");
                     player.GetDamage(new DamageMessage(gameObject, damage));
+                    GameObject _hitEffect = Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
                     Destroy(gameObject);
                 }
             }
             else if (other.gameObject.CompareTag("Wall"))
             {
                 Debug.Log("Wall Detected");
+                GameObject _hitEffect = Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
         }
         //Destroy(gameObject);
-
     }
 }
