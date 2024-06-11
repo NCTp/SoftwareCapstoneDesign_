@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8149993655232626408}
   - component: {fileID: 9110099871959533161}
   - component: {fileID: 2487722741834684346}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy_Test
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -212,6 +212,10 @@ PrefabInstance:
     - target: {fileID: 2091080774475740712, guid: c64e9e1454f08a84b8f9dacf774e7e49, type: 3}
       propertyPath: m_Name
       value: Marker
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091080774475740712, guid: c64e9e1454f08a84b8f9dacf774e7e49, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2091080774475740712, guid: c64e9e1454f08a84b8f9dacf774e7e49, type: 3}
       propertyPath: m_IsActive

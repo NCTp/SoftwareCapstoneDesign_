@@ -66,10 +66,7 @@ public class Player : MonoBehaviour, IDamageable
         }
         
     }
-    public void RigidbodyReset()
-    {
-        _rb.velocity = Vector3.zero;
-    }
+    
     public void RigidbodyAddForce()
     {
         _rb.AddForce(0.0f, jumpForce, 0.0f);

@@ -20,8 +20,9 @@ public class EnemyShooter : Enemy
     public GameObject projectile;
     void Fire()
     {
-        _targetDir = (_target.transform.position - muzzle.transform.position).normalized;
-        if(Physics.Raycast(muzzle.transform.position, _targetDir, out _hitInfo, rayRange))
+        _targetDir = (_target.transform.position - gameObject.transform.position).normalized;
+        int layerMask = (-1) - (1 << LayerMask.NameToLayer("Enemy"));
+        if(Physics.Raycast(gameObject.transform.position, _targetDir, out _hitInfo, rayRange))
         {
             if(_hitInfo.collider.gameObject.CompareTag("Player"))
             {
@@ -34,7 +35,10 @@ public class EnemyShooter : Enemy
                 if(_lockedOnTime >= fireRate) 
                 {
                     //_hitInfo.collider.gameObject.GetComponent<Player>().GetDamage(new DamageMessage(gameObject,damage));
-                    GameObject _projectile = Instantiate(projectile, transform.position, transform.rotation); // 투사체 발사
+                    GameObject _projectile = Instantiate(projectile, muzzle.transform.position,
+                        Quaternion.Lerp(transform.rotation, 
+                            Quaternion.LookRotation(_target.transform.position), 
+                            5 * Time.deltaTime)); // 투사체 발사
                     _projectile.GetComponent<Rigidbody>().velocity =
                         transform.forward * _projectile.GetComponent<Projectile>().speed;
                     _lockedOnTime = 0.0f; // 락온 시간 초기화
@@ -62,6 +66,7 @@ public class EnemyShooter : Enemy
     {
         _target = GameObject.FindWithTag("Player");
         _navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        _meshRenderer = GetComponent<MeshRenderer>();
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = 2;
         _lineRenderer.enabled = false;
@@ -75,6 +80,7 @@ public class EnemyShooter : Enemy
     // Update is called once per frame
     void Update()
     {
+        _target = GameObject.FindWithTag("Player");
         if(_canAttack) Fire();
         else
         {

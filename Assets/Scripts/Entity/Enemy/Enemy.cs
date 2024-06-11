@@ -9,9 +9,12 @@ public class Enemy : MonoBehaviour, IDamageable
     public float score = 1.0f;
     protected GameObject _target;
     protected NavMeshAgent _navMeshAgent;
+    protected Color originalColor;
+    protected MeshRenderer _meshRenderer;
 
     public void GetDamage(DamageMessage damageMessage)
     {
+        StartCoroutine(DamageEffectCoroutine());
         health -= damageMessage.amount;
         if (health <= 0)
         {
@@ -19,17 +22,25 @@ public class Enemy : MonoBehaviour, IDamageable
             {
                 damageMessage.damager.gameObject.GetComponent<Player>().ResetCoolTime();
             }
+
             Dead();
-            
         }
+    }
+
+    System.Collections.IEnumerator DamageEffectCoroutine()
+    {
+        _meshRenderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.05f); // 0.1초동안 대기하기
+        _meshRenderer.material.color = originalColor;
     }
     public float GetHealth()
     {
         return health;
     }
-    private void Dead()
+    protected void Dead()
     {
         GameManager.instance.AddScore(score);
+        _meshRenderer.material.color = originalColor;
         GetComponent<MeshDestroy>().DestroyMesh();
         Destroy(gameObject, 3.0f);
     }
@@ -38,6 +49,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         _target = GameObject.FindWithTag("Player");
         _navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        _meshRenderer = GetComponent<MeshRenderer>();
     }
     // Start is called before the first frame update
     void Start()

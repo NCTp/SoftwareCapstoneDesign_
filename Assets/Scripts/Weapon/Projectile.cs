@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
     public float speed = 1.0f;
     public float damage = 0.5f;
     public ProjectileType projectileType;
+    public GameObject hitEffect;
     
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,11 @@ public class Projectile : MonoBehaviour
                     Destroy(gameObject);
                 }
             }
+            else if (other.gameObject.CompareTag("Wall"))
+            {
+                Debug.Log("Wall Detected");
+                Destroy(gameObject);
+            }
         }
         else if (projectileType == ProjectileType.EnemyProjectile)
         {
@@ -52,6 +58,11 @@ public class Projectile : MonoBehaviour
                     player.GetDamage(new DamageMessage(gameObject, damage));
                     Destroy(gameObject);
                 }
+            }
+            else if (other.gameObject.CompareTag("Wall"))
+            {
+                Debug.Log("Wall Detected");
+                Destroy(gameObject);
             }
         }
         //Destroy(gameObject);

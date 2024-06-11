@@ -1599,6 +1599,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 420038547891410752, guid: 3b133636abb5245d3a026ca409e0b96e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 2932534443605771152, guid: 3b133636abb5245d3a026ca409e0b96e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1643,6 +1647,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8921644168335638428, guid: 3b133636abb5245d3a026ca409e0b96e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1851,6 +1859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef1b0976bf1a040969aa0faaf41f8ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mouseSensitivity: 100
   positionOffSet: {x: 0, y: 5, z: -5}
   directionOffSet: {x: 0, y: 0, z: 0}
 --- !u!1 &1910624283
