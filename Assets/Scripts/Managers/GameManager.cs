@@ -48,6 +48,11 @@ public class GameManager : MonoBehaviour
         return _level;
     }
 
+    public void SetLevel(int level)
+    {
+        _level = level;
+    }
+
     public void AddExp(float amount)
     {
         _exp += amount;

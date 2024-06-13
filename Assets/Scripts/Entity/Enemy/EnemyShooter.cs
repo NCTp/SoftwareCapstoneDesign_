@@ -21,7 +21,7 @@ public class EnemyShooter : Enemy
     void Fire()
     {
         _targetDir = (_target.transform.position - gameObject.transform.position).normalized;
-        int layerMask = (-1) - (1 << LayerMask.NameToLayer("Enemy"));
+        int layerMask = (-1) - (1 << LayerMask.NameToLayer("Enemy")) - (1 << LayerMask.NameToLayer("Camera"));
         if(Physics.Raycast(gameObject.transform.position, _targetDir, out _hitInfo, rayRange))
         {
             if(_hitInfo.collider.gameObject.CompareTag("Player"))

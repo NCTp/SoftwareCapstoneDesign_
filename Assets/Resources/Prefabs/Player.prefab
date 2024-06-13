@@ -367,7 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   scrabs: 0
-  speed: 10
+  speed: 30
   accelValue: 10
   chargeSpeed: 500
   jumpForce: 500
@@ -679,6 +679,10 @@ PrefabInstance:
     - target: {fileID: 2322721661375481536, guid: 364996d2403c87048a920d2e8fd8f377, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101103636083884297, guid: 364996d2403c87048a920d2e8fd8f377, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

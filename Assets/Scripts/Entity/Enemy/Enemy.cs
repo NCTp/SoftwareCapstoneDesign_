@@ -5,8 +5,11 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
+    public GameObject healthPack;
+    public GameObject energyPack;
     public float health = 5.0f;
     public float score = 1.0f;
+    public bool isNavMeshAgentActive = true;
     protected GameObject _target;
     protected NavMeshAgent _navMeshAgent;
     protected Color originalColor;
@@ -27,6 +30,19 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
+    private void DropItem()
+    {
+        int item = Random.Range(0, 2);
+        if (item == 0)
+        {
+            GameObject _healthPack = Instantiate(healthPack, transform.position, Quaternion.identity);
+        }
+        else if (item == 1)
+        {
+            GameObject _energyPack = Instantiate(energyPack, transform.position, Quaternion.identity);
+        }
+    }
+
     System.Collections.IEnumerator DamageEffectCoroutine()
     {
         _meshRenderer.material.color = Color.red;
@@ -40,6 +56,7 @@ public class Enemy : MonoBehaviour, IDamageable
     protected void Dead()
     {
         GameManager.instance.AddScore(score);
+        DropItem();
         _meshRenderer.material.color = originalColor;
         GetComponent<MeshDestroy>().DestroyMesh();
         Destroy(gameObject, 3.0f);

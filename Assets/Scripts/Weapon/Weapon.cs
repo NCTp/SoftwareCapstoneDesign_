@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     public GameObject projectile;
     public GameObject target;
     public Transform muzzle;
+    public GameObject muzzleFlash;
 
     private float rotationX, rotationY;
   

@@ -14,6 +14,11 @@ public class Projectile : MonoBehaviour
     public float damage = 0.5f;
     public ProjectileType projectileType;
     public GameObject hitEffect;
+
+    public void SetDirection(Vector3 dir)
+    {
+        gameObject.GetComponent<Rigidbody>().velocity = dir * speed;
+    }
     
     // Start is called before the first frame update
     void Start()

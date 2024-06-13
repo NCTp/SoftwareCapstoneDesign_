@@ -290,6 +290,9 @@ public class MeshDestroy : MonoBehaviour
             var rigidbody = GameObject.AddComponent<Rigidbody>();
             rigidbody.mass = 0.1f;
 
+            var autodistroy = GameObject.AddComponent<AutoDestroy>();
+            autodistroy.timer = 5.0f;
+
         }
 
     }

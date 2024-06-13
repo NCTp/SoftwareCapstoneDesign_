@@ -18,6 +18,7 @@ public class Player : MonoBehaviour, IDamageable
     public float fireRate = 1.0f;
     public Vector3 direction;
     public float chargeCoolTime = 1.0f;
+    public float bouncingParam = 100.0f;
 
     public Weapon weapon;
     //public GameObject chargeTarget;
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour, IDamageable
     private float _speed;
     private float _energy = 50.0f;
     private float _gravityValue = -9.81f;
-    private int _level;
+    private int _level = 1;
     private float _nextFireTime = 0.0f;
     private float _nextChargeTime = 0.0f;
 
@@ -63,6 +64,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             _level += 1;
             _energy -= 100;
+            GameManager.instance.SetLevel(_level);
         }
         
     }
@@ -118,7 +120,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             direction = new Vector3(horizontal, 0.0f, vertical);
             direction = transform.TransformDirection(direction) * _speed;
-            _speed += accelValue * Time.deltaTime;
+            //_speed += accelValue * Time.deltaTime;
             if(Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("Jump");
@@ -224,7 +226,12 @@ public class Player : MonoBehaviour, IDamageable
         if (Input.GetMouseButton(0) && Time.time > _nextFireTime)
         {
             _nextFireTime = Time.time + fireRate;
+            weapon.muzzleFlash.SetActive(true);
             Fire();
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            weapon.muzzleFlash.SetActive(false);
         }
         Charge();
 
@@ -239,7 +246,14 @@ public class Player : MonoBehaviour, IDamageable
         {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             enemy.GetDamage(new DamageMessage(gameObject, collisionDamage));
-            if (_isCharging) _isCharging = false;
+            if (_isCharging)
+            {
+                Vector3 targetDir = (transform.position - other.transform.position).normalized;
+                targetDir += new Vector3(0f, 3.0f, 0f);
+                direction += targetDir * bouncingParam;
+                _isCharging = false;
+                
+            }
         }
     }
     

@@ -21,12 +21,11 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Projectile_Player
-  m_Shader: {fileID: 4800000, guid: a9a8211f737bfbd4fb8a469399c59177, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 922235866e36ff749ab944ffa5d605e5, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _CFXR_DITHERED_SHADOWS_OFF
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -67,6 +66,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HologramScanLines:
+        m_Texture: {fileID: 2800000, guid: 06126dc3595bf3142a30641048be8ad6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -163,9 +166,11 @@ Material:
     - _RimFalloff: 1
     - _RimStrenght: 0
     - _RingTopOffset: 0.05
+    - _Scale: 1
     - _ScanStr: 1
     - _ScanStr2: 0
     - _ScreenDistortionScale: 0.1
+    - _ScrollSpeed: 0.05
     - _ShadowStrength: 1
     - _SingleChannel: 0
     - _Smoothness: 0.5
@@ -193,7 +198,11 @@ Material:
     - _FlowDirection: {r: 1, g: 0, b: 0, a: 0}
     - _FlowDirection1: {r: 0.05, g: 0, b: 0, a: 1}
     - _FlowDirection2: {r: 0, g: 0.05, b: 0, a: 1}
+    - _FrensnelColor: {r: 8, g: 8, b: 8, a: 0}
+    - _HologramTiling: {r: 2, g: 2, b: 0, a: 0}
+    - _MainColor: {r: 8, g: 8, b: 8, a: 0}
     - _MovementDirection: {r: 0, g: -1, b: 0, a: 1}
+    - _OutLineColor: {r: 8, g: 8, b: 8, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _WindDirection: {r: 1, g: 0, b: 0, a: 1}
