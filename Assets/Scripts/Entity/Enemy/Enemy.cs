@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour, IDamageable
     void Awake()
     {
         _target = GameObject.FindWithTag("Player");
-        _navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if(isNavMeshAgentActive) _navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         _meshRenderer = GetComponent<MeshRenderer>();
     }
     // Start is called before the first frame update
@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if (_target != null)
+        if (_target != null && isNavMeshAgentActive)
         {
             _navMeshAgent.SetDestination(_target.transform.position);
         }

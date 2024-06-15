@@ -49,7 +49,7 @@ public class Projectile : MonoBehaviour
             }
             else if (other.gameObject.CompareTag("Wall"))
             {
-                Debug.Log("Wall Detected");
+                //Debug.Log("Wall Detected");
                 GameObject _hitEffect = Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }

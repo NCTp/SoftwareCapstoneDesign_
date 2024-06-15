@@ -124,11 +124,15 @@ public class CamFollow : MonoBehaviour
         //CamZoomIn(100.0f, 0.2f);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
         FollowPlayer();
         RotateCam();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         //if(Input.GetKey(KeyCode.E)) CamZoomOut(5.0f);
         //if(Input.GetKey(KeyCode.Q)) CamZoomIn(50.0f, 5.0f);
 
