@@ -39,6 +39,7 @@ public class Player : MonoBehaviour, IDamageable
     private bool _isGrounded = true;
     private bool _isCharging = false;
     private RaycastHit _hitInfo;
+    private float cameraFOV = 0.0f;
 
     public void GetDamage(DamageMessage damageMessage)
     {
@@ -163,6 +164,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Charge()
     {
+        
         if (Input.GetKeyDown(KeyCode.E) && _lockOnTarget && _nextChargeTime >= chargeCoolTime)
         {
             //Debug.Log("C");
@@ -173,12 +175,14 @@ public class Player : MonoBehaviour, IDamageable
         {
             if (_lockOnTarget)
             {
-                Vector3 direction = (_lockOnTarget.transform.position - transform.position).normalized;
+                Camera.main.fieldOfView -= Time.deltaTime * 5.0f;
+                Vector3 direction = (_lockOnTarget.transform.position + new Vector3(0.0f, 5.0f, 0.0f) - transform.position).normalized;
                 _controller.Move(direction * chargeSpeed * Time.deltaTime);
             }
         }
         else
         {
+            Camera.main.fieldOfView = cameraFOV;
             Move2();
         }
         if (_lockOnTarget != null)
@@ -216,7 +220,7 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraFOV = Camera.main.fieldOfView;
     }
 
     // Update is called once per frame
@@ -227,6 +231,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             _nextFireTime = Time.time + fireRate;
             weapon.muzzleFlash.SetActive(true);
+            Camera.main.fieldOfView -= Time.deltaTime * 10.0f;
             Fire();
         }
         else if (Input.GetMouseButtonUp(0))

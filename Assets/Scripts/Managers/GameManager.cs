@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public Transform[] spawnpoints;
     
     private float _score;
     private int _stage = 1;

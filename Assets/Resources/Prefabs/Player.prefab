@@ -367,7 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   scrabs: 0
-  speed: 30
+  speed: 50
   accelValue: 10
   chargeSpeed: 500
   jumpForce: 500
@@ -375,6 +375,7 @@ MonoBehaviour:
   fireRate: 0.1
   direction: {x: 0, y: 0, z: 0}
   chargeCoolTime: 5
+  bouncingParam: 30
   weapon: {fileID: 2644548751504579328}
   Wheel: {fileID: 1014372973320257434}
 --- !u!54 &7175910249113727162

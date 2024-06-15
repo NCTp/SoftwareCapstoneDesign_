@@ -70,7 +70,12 @@ public class CamFollow : MonoBehaviour
 
     }
 
-    public void CamZoomIn(float amount, float time)
+    public void CamZoomIn(float amount)
+    {
+        Camera.main.fieldOfView -= amount * Time.deltaTime;
+    }
+
+    public void CamZoomInTime(float amount, float time)
     {
         StartCoroutine(CamZoomInCoroutine(amount, time));
     }
@@ -86,7 +91,12 @@ public class CamFollow : MonoBehaviour
         }
     }
 
-    public void CamZoomOut(float amount, float time)
+    public void CamZoomOut(float amount)
+    {
+        Camera.main.fieldOfView += amount * Time.deltaTime;
+    }
+
+    public void CamZoomOutTime(float amount, float time)
     {
         StartCoroutine(CamZoomOutCoroutine(amount, time));
 

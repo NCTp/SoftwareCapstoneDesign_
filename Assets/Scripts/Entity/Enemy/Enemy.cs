@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     public GameObject healthPack;
     public GameObject energyPack;
+    
     public float health = 5.0f;
     public float score = 1.0f;
     public bool isNavMeshAgentActive = true;
