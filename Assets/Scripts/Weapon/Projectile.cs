@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Enemy"))
             {
-                Enemy enemy = other.GetComponent<Enemy>();
+                IDamageable enemy = other.GetComponent<IDamageable>();
                 if (enemy != null)
                 {
                     Debug.Log("EnemyDamaged");

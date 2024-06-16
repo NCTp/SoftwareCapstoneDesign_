@@ -14,6 +14,7 @@ namespace EnemyWorm
     }
     public class EnemyBossWorm : Enemy
     {
+        public GameObject[] bodies;
         public float speed = 10.0f;
         public int rotationNumber = 3;
         public float idleTime = 2.0f;
@@ -40,7 +41,12 @@ namespace EnemyWorm
         // Update is called once per frame
         void Update()
         {
-            
+            /*
+            foreach (GameObject body in bodies)
+            {
+                body.transform.LookAt(_target.transform.position);
+            }
+            */
         
         }
         public void IdleWorm()
@@ -57,8 +63,6 @@ namespace EnemyWorm
         {
             _enemyBossWormStateContext.Transition(_attackState);
         }
-
-
     }
     public class EnemyBossWormStateContext
     {
