@@ -15,6 +15,7 @@ namespace EnemyWorm
     public class EnemyBossWorm : Enemy
     {
         public GameObject[] bodies;
+        public GameObject lazerCollider;
         public float speed = 30.0f;
         public int rotationNumber = 4;
         public float idleTime = 5.0f;
@@ -162,8 +163,17 @@ namespace EnemyWorm
                 }
                 else
                 {
-                    _enemyBossWorm.IdleWorm();
-                    DeleteController();
+                    int temp = Random.Range(0, 2);
+                    if (temp == 0)
+                    {
+                        _enemyBossWorm.IdleWorm();
+                        DeleteController();
+                    }
+                    else if (temp == 1)
+                    {
+                        _enemyBossWorm.AttackWorm();
+                        DeleteController();
+                    }
                 }
             }
         }
@@ -171,6 +181,10 @@ namespace EnemyWorm
 
     public class EnemyBossWormAttackState : MonoBehaviour, IEnemyBossWormState
     {
+        private float _attackTimer = 0.0f;
+        private float _attackTime = 3.0f;
+        private float _shootTimer = 0.0f;
+        private float _shootRate = 0.1f;
         private EnemyBossWorm _enemyBossWorm;
         public void Handle(EnemyBossWorm enemyBossWorm)
         {
@@ -184,11 +198,40 @@ namespace EnemyWorm
         {
             _enemyBossWorm = null;
         }
+
+        public void ShootLazer()
+        {
+            GameObject _collider = 
+                Instantiate(_enemyBossWorm.lazerCollider, _enemyBossWorm.transform.position, _enemyBossWorm.transform.rotation);
+            Vector3 dir = (_enemyBossWorm._target.transform.position - transform.position).normalized;
+            _collider.GetComponent<Projectile>().SetDirection(dir);
+            
+        }
         void Update()
         {
             if (_enemyBossWorm)
             {
-            
+                _enemyBossWorm.transform.rotation = Quaternion.LookRotation(_enemyBossWorm._target.transform.position);
+                if (_attackTimer >= _attackTime)
+                {
+                    _attackTimer = 0.0f;
+                    _enemyBossWorm.IdleWorm();
+                    DeleteController();
+                }
+                else
+                {
+                    if (_shootTimer >= _shootRate)
+                    {
+                        Debug.Log("Lazer Collider Shoot!");
+                        ShootLazer();
+                        _shootTimer = 0.0f;
+                    }
+                    else
+                    {
+                        _shootTimer += Time.deltaTime;
+                    }
+                    _attackTimer += Time.deltaTime;
+                }
             }
         }
     }

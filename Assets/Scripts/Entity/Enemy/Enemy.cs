@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public float health = 5.0f;
     public float score = 1.0f;
     public bool isNavMeshAgentActive = true;
-    protected GameObject _target;
+    public GameObject _target;
     protected NavMeshAgent _navMeshAgent;
     protected Color originalColor;
     protected MeshRenderer _meshRenderer;

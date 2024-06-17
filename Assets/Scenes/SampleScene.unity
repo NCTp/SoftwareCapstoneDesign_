@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Boss_Worm
       objectReference: {fileID: 0}
+    - target: {fileID: 3704423991459201022, guid: 79e806f3cd42dfd4a8f8af1d95ae82e3, type: 3}
+      propertyPath: m_Constraints
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 8993543760177017816, guid: 79e806f3cd42dfd4a8f8af1d95ae82e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
