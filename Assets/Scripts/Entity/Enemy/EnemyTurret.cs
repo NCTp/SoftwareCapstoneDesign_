@@ -28,7 +28,7 @@ public class EnemyTurret : MonoBehaviour
     void Awake()
     {
         _lineRenderer = muzzle.GetComponent<LineRenderer>();
-        //_lineRenderer.enabled = false;
+        _lineRenderer.enabled = false;
     }
     // Start is called before the first frame update
     void Start()
@@ -41,28 +41,41 @@ public class EnemyTurret : MonoBehaviour
     {
         muzzle.transform.LookAt(_player.transform.position);
         _dir = (_player.transform.position - muzzle.transform.position).normalized;
-        int layerMask = (-1) - (1 << LayerMask.NameToLayer("Enemy")) - (1 << LayerMask.NameToLayer("Camera"));
+        // 카메라와 적들은 Ray의 감지대상에서 제외
+        int layerMask = (-1) - (1 << LayerMask.NameToLayer("Enemy")) - (1 << LayerMask.NameToLayer("Camera")); 
         if (Physics.Raycast(muzzle.transform.position, _dir, out _hit, distance, layerMask))
         {
-            aimMarker.SetActive(true);
-            aimMarker.transform.position = _hit.point;
-            _lineRenderer.SetPosition(0, muzzle.transform.position);
-            _lineRenderer.SetPosition(1, _hit.point);
-            _lineRenderer.startWidth = _fireTime * 0.5f;
-            //Debug.Log("Player Detected!");
-            if (_fireTime >= fireRate)
+            if (_hit.collider.gameObject.CompareTag("Player"))
             {
-                aimMarker.SetActive(false);
-                Debug.Log("shoot");
-                Fire();
-                //_lineRenderer.enabled = false;
-                _fireTime = 0.0f;
-            }
-            else
-            {
-                //aimMarker.SetActive(true);
-                _fireTime += Time.deltaTime;
+                aimMarker.SetActive(true);
+                aimMarker.transform.position = _hit.point;
+                _lineRenderer.enabled = true;
+                _lineRenderer.SetPosition(0, muzzle.transform.position);
+                _lineRenderer.SetPosition(1, _hit.point);
+                _lineRenderer.startWidth = _fireTime * 0.5f;
+                //Debug.Log("Player Detected!");
+                if (_fireTime >= fireRate)
+                {
+                    aimMarker.SetActive(false);
+                    Debug.Log("shoot");
+                    Fire();
+                    //_lineRenderer.enabled = false;
+                    _fireTime = 0.0f;
+                }
+                else
+                {
+                    //aimMarker.SetActive(true);
+                    _fireTime += Time.deltaTime;
+                }
             }
         }
+        else
+        {
+            // 플레이어가 Ray에 걸리지 않으면 모두 초기화
+            aimMarker.SetActive(false);
+            _lineRenderer.enabled = false;
+            _fireTime = 0.0f;
+        }
+        
     }
 }

@@ -15,9 +15,9 @@ namespace EnemyWorm
     public class EnemyBossWorm : Enemy
     {
         public GameObject[] bodies;
-        public float speed = 10.0f;
-        public int rotationNumber = 3;
-        public float idleTime = 2.0f;
+        public float speed = 30.0f;
+        public int rotationNumber = 4;
+        public float idleTime = 5.0f;
         public float CurrentSpeed {get; set;}
         public float CurrentRotationNumber { get; set; }
         public float CurrentIdleTimer { get; set; }

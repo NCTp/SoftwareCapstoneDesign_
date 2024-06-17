@@ -110,6 +110,7 @@ public class Player : MonoBehaviour, IDamageable
         _isGrounded = _controller.isGrounded;
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+        //transform.Rotate(0.0f, Input.GetAxis("Mouse X") * 1.5f, 0.0f, Space.World);
         //if(horizontal == vertical) RigidbodyReset();
         if (horizontal == 0 && vertical == 0)
         {
@@ -164,7 +165,6 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Charge()
     {
-        
         if (Input.GetKeyDown(KeyCode.E) && _lockOnTarget && _nextChargeTime >= chargeCoolTime)
         {
             //Debug.Log("C");
@@ -239,10 +239,6 @@ public class Player : MonoBehaviour, IDamageable
             weapon.muzzleFlash.SetActive(false);
         }
         Charge();
-
-        if (Input.GetKeyDown(KeyCode.E)) _health -= 10.0f;
-
-        
     }
 
     private void OnCollisionEnter(Collision other)
