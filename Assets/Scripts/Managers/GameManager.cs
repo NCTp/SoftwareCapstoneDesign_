@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     private int _stage = 1;
     private int _level = 1;
     private float _exp = 0.0f;
+
+    private DateTime _sessionStartTime;
+    private DateTime _sessionEndTime;
     
     void Awake()
     {
@@ -25,8 +28,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
         _stage = 1;
     }
     public void AddScore(float points)
@@ -62,6 +65,24 @@ public class GameManager : MonoBehaviour
             _level += 1;
             _exp -= 100.0f;
         }
+    }
+
+    public void OnApplicationQuit()
+    {
+        _sessionEndTime = DateTime.Now;
+        TimeSpan timeDifference = _sessionEndTime.Subtract(_sessionStartTime);
+        Debug.Log("Game Session Ended @: " + DateTime.Now);
+        Debug.Log("Game Session Lasted : " + timeDifference);
+    }
+
+    public void OnStageSelectButton()
+    {
+        Debug.Log("Stage Select");
+    }
+    public void OnQuitButton()
+    {
+        //OnApplicationQuit();
+        Debug.Log("Quit");
     }
 
 // Start is called before the first frame update
