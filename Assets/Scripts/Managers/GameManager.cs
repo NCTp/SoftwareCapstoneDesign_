@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -75,14 +76,21 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Session Lasted : " + timeDifference);
     }
 
-    public void OnStageSelectButton()
+    public void OnClickStageSelectButton()
     {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("StageSelectMenu");
         Debug.Log("Stage Select");
     }
-    public void OnQuitButton()
+    public void OnClickQuitButton()
     {
         //OnApplicationQuit();
+        Application.Quit();
         Debug.Log("Quit");
+    }
+
+    public void OnClickBossWormButton()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Worm");
     }
 
 // Start is called before the first frame update
