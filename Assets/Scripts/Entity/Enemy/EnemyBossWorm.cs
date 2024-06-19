@@ -16,6 +16,7 @@ namespace EnemyWorm
     {
         public GameObject[] bodies;
         public GameObject lazerCollider;
+        public GameObject mine;
         public float speed = 30.0f;
         public int rotationNumber = 4;
         public float idleTime = 5.0f;
@@ -148,38 +149,17 @@ namespace EnemyWorm
 
         private void GetRandomAngle()
         {
-            /*
-            int layerMask = (1 << LayerMask.NameToLayer("Wall")); 
-            if (Physics.Raycast(transform.position, Vector3.down, out _hitInfo, 1000.0f, layerMask))
-            {
-                if (_hitInfo.collider)
-                {
-                    if (_hitInfo.collider.gameObject.CompareTag("Wall"))
-                    {
-                        _floorDistance = Vector3.Distance(transform.position, _hitInfo.point);
-                    }
-                }
-
-                Debug.Log("HIT NAME : " + _hitInfo.collider.gameObject.name);
-                Debug.Log("Distance : " + _floorDistance);
-            }
-            if (_floorDistance <= 50.0f)
-            {
-                _randomAngle = new Vector3(Random.Range(-15.0f, 0.0f),Random.Range(-150.0f, 150.0f),0.0f);
-            }
-            else
-            {
-                _randomAngle = new Vector3(Random.Range(-15.0f, 15.0f),Random.Range(-150.0f, 150.0f),0.0f);
-            }
-            */
             _randomAngle = new Vector3(0.0f,Random.Range(-150.0f, 150.0f),0.0f);
             _enemyBossWorm.transform.Rotate(_randomAngle);
             Vector3 dir = new Vector3(_enemyBossWorm._target.transform.position.x, _enemyBossWorm.transform.position.y,
                 _enemyBossWorm._target.transform.position.z);
             transform.LookAt(dir);
+        }
 
-
-            
+        private void SpawnMine()
+        {
+            Vector3 pos = new Vector3(_enemyBossWorm.transform.position.x, -9.5f, _enemyBossWorm.transform.position.z);
+            GameObject _mine = Instantiate(_enemyBossWorm.mine, pos, Quaternion.identity);
         }
         void Update()
         {
@@ -191,6 +171,7 @@ namespace EnemyWorm
                     if (_rotationTime >= _rotationRate)
                     {
                         GetRandomAngle();
+                        SpawnMine();
                         _rotationTime = 0.0f;
                         _enemyBossWorm.CurrentRotationNumber--;
                     }

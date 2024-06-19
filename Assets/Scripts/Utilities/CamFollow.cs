@@ -17,6 +17,7 @@ public class CamFollow : MonoBehaviour
     private Vector3 _targetDirection;
     private RaycastHit _hitInfo;
     private float _rotationSpeed = 10.0f;
+    private bool _isShaking = false;
 
     private float rotationX =0.0f, rotationY=0.0f;
 
@@ -48,25 +49,33 @@ public class CamFollow : MonoBehaviour
 
     }
 
-    void CamShake(float amount, float time)
+    public void CamShake(float amount, float time)
     {
-        Vector3 originalOffSet = directionOffSet;
+        Debug.Log("CamShake");
+        _isShaking = true;
+        Vector3 originalOffSet = positionOffSet;
         StartCoroutine(CamShakeCoroutine(amount, time, originalOffSet));
     }
 
     IEnumerator CamShakeCoroutine(float amount, float time, Vector3 originalOffSet)
     {
         float timer = time;
+        float _amount = amount;
         while(timer > 0)
         {
             timer -= Time.deltaTime;
+            _amount -= Time.deltaTime;
             Vector3 noise = 
-            new Vector3(Random.Range(-amount, amount), Random.Range(-amount, amount), Random.Range(-amount, amount));
-            directionOffSet += noise;
+            new Vector3(Random.Range(-_amount, _amount), Random.Range(-_amount, _amount), Random.Range(-_amount, _amount));
+            positionOffSet = originalOffSet;
+            positionOffSet += noise;
             yield return null;
 
         }
-        if(timer <= 0) directionOffSet = originalOffSet;
+
+        //Debug.Log("Shake End");
+        _isShaking = false;
+        if(timer <= 0) positionOffSet = originalOffSet;
 
     }
 
@@ -120,14 +129,22 @@ public class CamFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //CamShake(0.1f, 1.0f);
+        CamShake(0.1f, 0.3f);
         //CamZoomIn(100.0f, 0.2f);
     }
 
     private void LateUpdate()
     {
-        FollowPlayer();
-        RotateCam();
+        if (!_isShaking)
+        {
+            FollowPlayer();
+            RotateCam();
+        }
+        else
+        {
+            FollowPlayer();
+        }
+        
     }
 
     // Update is called once per frame

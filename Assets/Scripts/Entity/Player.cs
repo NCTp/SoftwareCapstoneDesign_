@@ -44,7 +44,10 @@ public class Player : MonoBehaviour, IDamageable
     public void GetDamage(DamageMessage damageMessage)
     {
         _health -= damageMessage.amount;
+        Camera.main.gameObject.GetComponent<CamFollow>().CamShake(2.0f, 0.2f);
+
     }
+    
     public float GetHealth()
     {
         return _health;

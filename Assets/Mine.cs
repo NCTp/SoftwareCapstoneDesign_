@@ -6,13 +6,18 @@ using UnityEngine;
 
 public class Mine : MonoBehaviour
 {
-    public string[] ignoreLayers;
-    //private int[] ignoreLayersNumber;
-    private BoxCollider _boxCollider;
+
+    public GameObject explodeEffect;
+
+
+    void Explode()
+    {
+        GameObject _explodeEffect = Instantiate(explodeEffect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
 
     void Awake()
     {
-        _boxCollider = GetComponent<BoxCollider>();
     }
     // Start is called before the first frame update
     void Start()
@@ -30,6 +35,8 @@ public class Mine : MonoBehaviour
         Debug.Log(other.gameObject.name);
         if(other.gameObject.CompareTag("Player"))
         {
+            other.gameObject.GetComponent<Player>().GetDamage(new DamageMessage(gameObject, 10.0f));
+            Explode();
             Debug.Log("Player Detected");
         }
     }
