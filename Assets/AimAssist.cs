@@ -32,6 +32,7 @@ public class AimAssist : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Aim to : " + other.name);
         if (other.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponent<Enemy>();

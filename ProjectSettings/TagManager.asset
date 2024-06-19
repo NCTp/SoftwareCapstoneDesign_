@@ -9,6 +9,8 @@ TagManager:
   - Wall
   - Boss
   - Managers
+  - AimAssist
+  - DamageField
   layers:
   - Default
   - TransparentFX
@@ -21,8 +23,8 @@ TagManager:
   - Enemy
   - Camera
   - Managers
-  - 
-  - 
+  - Wall
+  - AimAssist
   - 
   - 
   - 

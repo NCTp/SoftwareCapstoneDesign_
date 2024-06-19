@@ -15,10 +15,10 @@ public class Entity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int layerMask = (-1) - (1 << LayerMask.NameToLayer("Managers")); 
+        int layerMask = 1 << LayerMask.NameToLayer("Wall");  
         if (Physics.Raycast(transform.position, Vector3.down, out _hitinfo, 100.0f, layerMask))
         {
-            Debug.Log(_hitinfo.collider.gameObject.name);
+            //Debug.Log(_hitinfo.collider.gameObject.name);
             if (_hitinfo.collider.gameObject.CompareTag("Wall"))
             {
                 posMark.transform.position = _hitinfo.point;

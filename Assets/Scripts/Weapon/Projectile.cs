@@ -61,7 +61,7 @@ public class Projectile : MonoBehaviour
                 Player player = other.GetComponent<Player>();
                 if (player != null)
                 {
-                    Debug.Log("PlayerDamaged");
+                   // Debug.Log("PlayerDamaged");
                     player.GetDamage(new DamageMessage(gameObject, damage));
                     GameObject _hitEffect = Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
                     Destroy(gameObject);
@@ -69,7 +69,7 @@ public class Projectile : MonoBehaviour
             }
             else if (other.gameObject.CompareTag("Wall"))
             {
-                Debug.Log("Wall Detected");
+                //Debug.Log("Wall Detected");
                 GameObject _hitEffect = Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
