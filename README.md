@@ -1,6 +1,8 @@
 # 데모 실행파일 다운로드   
 https://drive.google.com/file/d/1gBUkf85YhwJUojKZn6JrHBtbbU4GujKM/view?usp=drive_link
 - 데모는 다운로드 후 바로 플레이 가능
+# 데모 영상   
+https://www.youtube.com/watch?v=upwIhN9lnKw
 
 # 주제 : 물체의 파괴 구현과 게임 개발   
 
