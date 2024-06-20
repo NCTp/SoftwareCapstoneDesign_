@@ -2,7 +2,7 @@
 https://drive.google.com/file/d/1gBUkf85YhwJUojKZn6JrHBtbbU4GujKM/view?usp=drive_link
 - 데모는 다운로드 후 바로 플레이 가능
 
-##주제 : 물체의 파괴 구현과 게임 개발   
+# H1주제 : 물체의 파괴 구현과 게임 개발   
 
 # 목적   
 - 물체의 파괴 기능을 강화학습을 통해 학습
