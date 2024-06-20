@@ -1,16 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager instance;
     public GameObject spawnObject;
+    public GameObject spawnObject2;
     public SpawnPoint[] spawnPoints;
+    public Enemy boss;
+    public Spawner[] waveSpawners;
     public float spawnRate = 1.0f;
     private float _spawnTimer = 0.0f;
     private BoxCollider _boxCollider;
+    public float spawnRate2 = 2.0f;
+    private float _spawnTimer2 = 0.0f;
+    
 
     Vector3 GetRandomPosition()
     {
@@ -57,5 +64,35 @@ public class SpawnManager : MonoBehaviour
         {
             _spawnTimer += Time.deltaTime;
         }
+        
+        if (_spawnTimer2 >= spawnRate2)
+        {
+            GameObject _spawnObject2 = Instantiate(spawnObject2, GetRandomPosition(), Quaternion.identity);
+            _spawnTimer2 = 0.0f;
+        }
+        else
+        {
+            _spawnTimer2 += Time.deltaTime;
+        }
+
+
+        if (boss.health <= 700.0f)
+        {
+            Debug.Log("PHASE TWO");
+            foreach (Spawner ws in waveSpawners)
+            {
+                ws.spawnStart = true;
+            }
+        }
+        else if (boss.health < 300.0f)
+        {
+            Debug.Log("PHASE THREE");
+            foreach (Spawner ws in waveSpawners)
+            {
+                ws.spawnRate = 7.5f;
+            }
+        }
+
+        //Debug.Log("Boss Health Now : " + boss.health);
     }
 }

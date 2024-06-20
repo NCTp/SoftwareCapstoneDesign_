@@ -18,6 +18,7 @@ namespace EnemyWorm
         public GameObject[] bodies;
         public GameObject lazerCollider;
         public GameObject mine;
+        public Spawner[] waveSpawner;
         public float speed = 30.0f;
         public int rotationNumber = 4;
         public float idleTime = 5.0f;
@@ -44,12 +45,6 @@ namespace EnemyWorm
         // Update is called once per frame
         void Update()
         {
-            /*
-            foreach (GameObject body in bodies)
-            {
-                body.transform.LookAt(_target.transform.position);
-            }
-            */
         
         }
         public void IdleWorm()
@@ -122,6 +117,7 @@ namespace EnemyWorm
         {
             if (_enemyBossWorm)
             {
+                
                 _enemyBossWorm.transform.Translate(Vector3.forward * _enemyBossWorm.speed / 100.0f * Time.deltaTime);
                 if (_enemyBossWorm.CurrentIdleTimer >= _enemyBossWorm.idleTime)
                 {

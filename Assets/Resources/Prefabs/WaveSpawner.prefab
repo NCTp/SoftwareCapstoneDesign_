@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnGameObject: {fileID: 1673545925718734585, guid: ffe66f7e6e6794f42aa6104d7f8af865, type: 3}
+  dangerIndicator: {fileID: 8922233491773324091, guid: 2367099306dde06489e1752b17d97d71, type: 3}
   spawnPoints:
   - {fileID: 587426717805321593}
   - {fileID: 8883259436460589216}

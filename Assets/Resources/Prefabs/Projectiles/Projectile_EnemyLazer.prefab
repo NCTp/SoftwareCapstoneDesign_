@@ -54,7 +54,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667450088926545981}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -177,6 +177,18 @@ PrefabInstance:
     - target: {fileID: 4029082738427998209, guid: 352fb8f169737f04da70956317214bfb, type: 3}
       propertyPath: m_Name
       value: Fire_Pink
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892721670182991561, guid: 352fb8f169737f04da70956317214bfb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892721670182991561, guid: 352fb8f169737f04da70956317214bfb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892721670182991561, guid: 352fb8f169737f04da70956317214bfb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6892721670182991561, guid: 352fb8f169737f04da70956317214bfb, type: 3}
       propertyPath: m_LocalPosition.x

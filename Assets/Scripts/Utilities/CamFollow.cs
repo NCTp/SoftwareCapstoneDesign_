@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,7 +14,8 @@ public class CamFollow : MonoBehaviour
 
     public Vector3 positionOffSet;
     public Vector3 directionOffSet;
-    private GameObject Target;
+    private GameObject target;
+    private Transform orientation;
     private Quaternion _targetRotation;
     private Vector3 _targetDirection;
     private RaycastHit _hitInfo;
@@ -21,14 +23,21 @@ public class CamFollow : MonoBehaviour
     private bool _isShaking = false;
 
     private float rotationX =0.0f, rotationY=0.0f;
+    
+    public enum CameraStyle
+    {
+        Basic,
+        Combat,
+        Topdown
+    }
 
     void FollowPlayer()
     {
         if (!_isShaking)
         {
-            transform.position = Target.transform.position + positionOffSet;
+            transform.position = target.transform.position + positionOffSet;
             _targetDirection = 
-                ((Target.transform.position + directionOffSet) - transform.position).normalized; // 카메라 연출을 위한 OffSet 추가
+                ((target.transform.position + directionOffSet) - transform.position).normalized; // 카메라 연출을 위한 OffSet 추가
         
             _targetRotation = Quaternion.LookRotation(_targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, _rotationSpeed);
@@ -41,15 +50,25 @@ public class CamFollow : MonoBehaviour
         }
     }
 
+    void FollowPlayer2()
+    {
+        Vector3 desiredPosition = target.transform.position + positionOffSet; // 목표 위치 설정
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, 0.125f); // 부드러운 이동
+        transform.position = smoothedPosition; // 카메라 위치 갱신
+
+        transform.LookAt(target.transform);
+    }
+
     void RotateCam()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
         rotationY += mouseX * Time.deltaTime;
         rotationX -= mouseY * Time.deltaTime;
-        rotationY = Mathf.Clamp(rotationY, -120f, 120f);
-        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
+        //rotationY = Mathf.Clamp(rotationY, -120f, 120f);
+        //rotationX = Mathf.Clamp(rotationX, -90f, 90f);
         transform.eulerAngles = new Vector3(rotationX, rotationY, 0.0f);
+        target.transform.eulerAngles = new Vector3(rotationX, rotationY, 0.0f);
 
     }
 
@@ -72,7 +91,7 @@ public class CamFollow : MonoBehaviour
             float _x = Random.Range(-1f, 1f) * amount;
             float _y = Random.Range(-1f, 1f) * amount;
             
-            transform.localPosition += new Vector3(_x, _y, 0.0f);
+            transform.localPosition += new Vector3(_x, _y);
             yield return null;
         }
         //Debug.Log("Shake End");
@@ -126,7 +145,7 @@ public class CamFollow : MonoBehaviour
 
     void Awake()
     {
-        Target = GameObject.FindWithTag("Player");
+        target = GameObject.FindWithTag("Player");
     }
     // Start is called before the first frame update
     void Start()
@@ -137,23 +156,15 @@ public class CamFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!_isShaking)
-        {
-            FollowPlayer();
-            RotateCam();
-        }
-        else
-        {
-            FollowPlayer();
-        }
+        FollowPlayer2();
+        RotateCam();
         
     }
+    
 
     // Update is called once per frame
     void Update()
     {
-        //if(Input.GetKey(KeyCode.E)) CamZoomOut(5.0f);
-        //if(Input.GetKey(KeyCode.Q)) CamZoomIn(50.0f, 5.0f);
 
 
     }

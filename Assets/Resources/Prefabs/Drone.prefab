@@ -101,10 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootRate: 0.05
+  damage: 0.2
   projectile: {fileID: 667450088926545981, guid: ac6e542de77ba4147b45279931cd3d92, type: 3}
   target: {fileID: 0}
   muzzle: {fileID: 7668791750773707212}
   muzzleFlash: {fileID: 8517767298768188354}
+  player: {fileID: 0}
 --- !u!54 &437299548146685369
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -41,6 +41,8 @@ public class Player : MonoBehaviour, IDamageable
     private bool _isCharging = false;
     private RaycastHit _hitInfo;
     private float cameraFOV = 0.0f;
+    
+    
 
     public void GetDamage(DamageMessage damageMessage)
     {
@@ -71,7 +73,11 @@ public class Player : MonoBehaviour, IDamageable
             _energy -= 100;
             GameManager.instance.SetLevel(_level);
         }
-        
+    }
+
+    public int GetLevel()
+    {
+        return _level;
     }
     
     public void RigidbodyAddForce()
