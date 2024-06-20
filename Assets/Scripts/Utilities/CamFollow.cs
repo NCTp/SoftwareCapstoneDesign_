@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class CamFollow : MonoBehaviour
 {
+    
     public float mouseSensitivity = 100.0f;
 
     public Vector3 positionOffSet;
@@ -23,17 +24,20 @@ public class CamFollow : MonoBehaviour
 
     void FollowPlayer()
     {
-        transform.position = Target.transform.position + positionOffSet;
-        _targetDirection = 
-        ((Target.transform.position + directionOffSet) - transform.position).normalized; // 카메라 연출을 위한 OffSet 추가
-        
-        _targetRotation = Quaternion.LookRotation(_targetDirection);
-        transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, _rotationSpeed);
-
-        int layerMask = 1 << LayerMask.NameToLayer("Wall"); // 벽만 감지하도록 LayerMask 정의
-        if(Physics.Raycast(transform.position, _targetDirection, out _hitInfo, 10.0f, layerMask))
+        if (!_isShaking)
         {
-            //Debug.Log("Wall Detected");
+            transform.position = Target.transform.position + positionOffSet;
+            _targetDirection = 
+                ((Target.transform.position + directionOffSet) - transform.position).normalized; // 카메라 연출을 위한 OffSet 추가
+        
+            _targetRotation = Quaternion.LookRotation(_targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, _rotationSpeed);
+
+            int layerMask = 1 << LayerMask.NameToLayer("Wall"); // 벽만 감지하도록 LayerMask 정의
+            if(Physics.Raycast(transform.position, _targetDirection, out _hitInfo, 10.0f, layerMask))
+            {
+                //Debug.Log("Wall Detected");
+            }
         }
     }
 
@@ -65,14 +69,12 @@ public class CamFollow : MonoBehaviour
         {
             timer -= Time.deltaTime;
             _amount -= Time.deltaTime;
-            Vector3 noise = 
-            new Vector3(Random.Range(-_amount, _amount), Random.Range(-_amount, _amount), Random.Range(-_amount, _amount));
-            positionOffSet = originalOffSet;
-            positionOffSet += noise;
+            float _x = Random.Range(-1f, 1f) * amount;
+            float _y = Random.Range(-1f, 1f) * amount;
+            
+            transform.localPosition += new Vector3(_x, _y, 0.0f);
             yield return null;
-
         }
-
         //Debug.Log("Shake End");
         _isShaking = false;
         if(timer <= 0) positionOffSet = originalOffSet;
@@ -129,7 +131,7 @@ public class CamFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CamShake(0.1f, 0.3f);
+        CamShake(0.1f, 0.2f);
         //CamZoomIn(100.0f, 0.2f);
     }
 

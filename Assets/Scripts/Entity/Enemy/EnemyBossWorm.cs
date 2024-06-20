@@ -214,7 +214,7 @@ namespace EnemyWorm
         private float _attackTimer = 0.0f;
         private float _attackTime = 7.0f;
         private float _shootTimer = 0.0f;
-        private float _shootRate = 0.2f;
+        private float _shootRate = 0.1f;
         private EnemyBossWorm _enemyBossWorm;
         public void Handle(EnemyBossWorm enemyBossWorm)
         {
@@ -242,11 +242,8 @@ namespace EnemyWorm
         {
             if (_enemyBossWorm)
             {
-                Vector3 dir = 
-                    new Vector3(_enemyBossWorm._target.transform.position.x, 
-                        _enemyBossWorm.transform.position.y, 
-                        _enemyBossWorm._target.transform.position.z);
-                _enemyBossWorm.transform.rotation = Quaternion.LookRotation(_enemyBossWorm._target.transform.position);
+                Vector3 dir = _enemyBossWorm._target.transform.position - _enemyBossWorm.transform.position;
+                _enemyBossWorm.transform.rotation = Quaternion.LookRotation(dir);
                 if (_attackTimer >= _attackTime)
                 {
                     _attackTimer = 0.0f;
