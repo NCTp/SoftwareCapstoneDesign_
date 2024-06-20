@@ -57,7 +57,7 @@ public class EnemyTurret : MonoBehaviour
                 if (_fireTime >= fireRate)
                 {
                     aimMarker.SetActive(false);
-                    Debug.Log("shoot");
+                    //Debug.Log("shoot");
                     Fire();
                     //_lineRenderer.enabled = false;
                     _fireTime = 0.0f;

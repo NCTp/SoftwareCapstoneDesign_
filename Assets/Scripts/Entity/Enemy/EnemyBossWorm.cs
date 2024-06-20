@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -65,6 +66,15 @@ namespace EnemyWorm
         {
             _enemyBossWormStateContext.Transition(_attackState);
         }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.CompareTag("Wall"))
+            {
+                transform.rotation = Quaternion.LookRotation(new Vector3(0.0f,12.0f,0.0f) - transform.position);
+                Debug.Log("Detected" + other.gameObject.name);
+            }
+        }
     }
     public class EnemyBossWormStateContext
     {
@@ -112,6 +122,7 @@ namespace EnemyWorm
         {
             if (_enemyBossWorm)
             {
+                _enemyBossWorm.transform.Translate(Vector3.forward * _enemyBossWorm.speed / 100.0f * Time.deltaTime);
                 if (_enemyBossWorm.CurrentIdleTimer >= _enemyBossWorm.idleTime)
                 {
                     _enemyBossWorm.MoveWorm();
@@ -150,10 +161,10 @@ namespace EnemyWorm
         private void GetRandomAngle()
         {
             _randomAngle = new Vector3(0.0f,Random.Range(-150.0f, 150.0f),0.0f);
-            _enemyBossWorm.transform.Rotate(_randomAngle);
-            Vector3 dir = new Vector3(_enemyBossWorm._target.transform.position.x, _enemyBossWorm.transform.position.y,
-                _enemyBossWorm._target.transform.position.z);
-            transform.LookAt(dir);
+            _enemyBossWorm.transform.rotation = Quaternion.Euler(_randomAngle);
+            //Vector3 dir = new Vector3(_enemyBossWorm._target.transform.position.x, _enemyBossWorm.transform.position.y,
+                //_enemyBossWorm._target.transform.position.z);
+            //transform.LookAt(dir);
         }
 
         private void SpawnMine()
@@ -201,9 +212,9 @@ namespace EnemyWorm
     public class EnemyBossWormAttackState : MonoBehaviour, IEnemyBossWormState
     {
         private float _attackTimer = 0.0f;
-        private float _attackTime = 3.0f;
+        private float _attackTime = 7.0f;
         private float _shootTimer = 0.0f;
-        private float _shootRate = 0.1f;
+        private float _shootRate = 0.2f;
         private EnemyBossWorm _enemyBossWorm;
         public void Handle(EnemyBossWorm enemyBossWorm)
         {
@@ -215,6 +226,7 @@ namespace EnemyWorm
         }
         public void DeleteController()
         {
+            _enemyBossWorm.transform.rotation = new Quaternion(0,0,0,1);
             _enemyBossWorm = null;
         }
 
@@ -230,6 +242,10 @@ namespace EnemyWorm
         {
             if (_enemyBossWorm)
             {
+                Vector3 dir = 
+                    new Vector3(_enemyBossWorm._target.transform.position.x, 
+                        _enemyBossWorm.transform.position.y, 
+                        _enemyBossWorm._target.transform.position.z);
                 _enemyBossWorm.transform.rotation = Quaternion.LookRotation(_enemyBossWorm._target.transform.position);
                 if (_attackTimer >= _attackTime)
                 {

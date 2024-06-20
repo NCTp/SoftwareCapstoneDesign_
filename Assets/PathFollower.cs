@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using TMPro;
 using UnityEngine;
 
 public class PathFollower : MonoBehaviour
@@ -9,6 +11,10 @@ public class PathFollower : MonoBehaviour
     public float followSpeed = 2.0f;
 
     private int currentPathIndex = 0;
+
+    void Awake()
+    {
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -19,10 +25,11 @@ public class PathFollower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         float distance = Vector3.Distance(transform.position, targetPathRecorder.transform.position);
         if (targetPathRecorder != null 
             && currentPathIndex < targetPathRecorder.pathPositions.Count 
-            && distance >= 15.0f)
+            )
         {
             Vector3 targetPosition = targetPathRecorder.pathPositions[currentPathIndex];
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, followSpeed * Time.deltaTime);

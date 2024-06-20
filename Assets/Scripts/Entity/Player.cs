@@ -24,6 +24,7 @@ public class Player : MonoBehaviour, IDamageable
     //public GameObject chargeTarget;
     private GameObject _lockOnTarget;
     public GameObject Wheel;
+    public GameObject aimMarker;
 
     private Rigidbody _rb;
     private SphereCollider _sphereCollider;

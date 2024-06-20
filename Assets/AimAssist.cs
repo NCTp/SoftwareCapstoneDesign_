@@ -32,16 +32,11 @@ public class AimAssist : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Aim to : " + other.name);
+        //Debug.Log("Aim to : " + other.name);
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if(enemy.health <= player.GetComponent<Player>().collisionDamage) 
-                player.GetComponent<Player>().SetTarget(other.gameObject);
-            else
-            {
-                player.GetComponent<Player>().SetTarget(other.gameObject);
-            }
+            //Enemy enemy = other.GetComponent<Enemy>();
+            player.GetComponent<Player>().SetTarget(other.gameObject);
         }
     }
 

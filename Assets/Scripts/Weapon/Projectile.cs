@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
                 IDamageable enemy = other.GetComponent<IDamageable>();
                 if (enemy != null)
                 {
-                    Debug.Log("EnemyDamaged");
+                    //Debug.Log("EnemyDamaged");
                     enemy.GetDamage(new DamageMessage(gameObject, damage));
                     GameObject _hitEffect = Instantiate(hitEffect, gameObject.transform.position, Quaternion.identity);
                     Destroy(gameObject);

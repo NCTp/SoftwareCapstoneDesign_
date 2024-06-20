@@ -207,6 +207,7 @@ MonoBehaviour:
   health: 5
   score: 1
   isNavMeshAgentActive: 1
+  _target: {fileID: 0}
   explosionEffect: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4, type: 3}
   explosionRadius: 100
   explosionDelay: 2
@@ -331,7 +332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2091080774475740712, guid: c64e9e1454f08a84b8f9dacf774e7e49, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5111298311404025289, guid: c64e9e1454f08a84b8f9dacf774e7e49, type: 3}
       propertyPath: m_LocalPosition.x

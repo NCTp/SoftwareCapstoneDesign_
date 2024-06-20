@@ -132,7 +132,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CutCascades: 3
   ExplodeForce: 1000
+  MaxDestroyLevel: 3
 --- !u!114 &9110099871959533161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,7 +202,7 @@ MonoBehaviour:
   bodies: []
   lazerCollider: {fileID: 667450088926545981, guid: 94d8a347ca985df42a17fe360d44f80c, type: 3}
   mine: {fileID: 793765697677509300, guid: f1d4340f5ef2e5b47a7269dc5e9ce311, type: 3}
-  speed: 70
+  speed: 150
   rotationNumber: 3
   idleTime: 3
 --- !u!114 &881069333902115684
@@ -244,7 +245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5111298311404025289, guid: c64e9e1454f08a84b8f9dacf774e7e49, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.971
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5111298311404025289, guid: c64e9e1454f08a84b8f9dacf774e7e49, type: 3}
       propertyPath: m_LocalPosition.z
