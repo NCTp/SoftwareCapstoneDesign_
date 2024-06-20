@@ -125,8 +125,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a398d88b0ab44f98c83a5331147467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthPack: {fileID: 0}
+  energyPack: {fileID: 0}
   health: 5
   score: 1
+  isNavMeshAgentActive: 1
+  _target: {fileID: 0}
 --- !u!54 &2622572743026221381
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -166,8 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed99a5a353587614696d13d970b829e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CutCascades: 5
-  ExplodeForce: 3
+  Slices: 3
+  ExplosionForce: 3000
 --- !u!114 &9110099871959533161
 MonoBehaviour:
   m_ObjectHideFlags: 0

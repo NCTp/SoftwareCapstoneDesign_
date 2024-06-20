@@ -10,26 +10,21 @@ public class MeshDestroy : MonoBehaviour
     private Vector2 edgeUV = Vector2.zero;
     private Plane edgePlane = new Plane();
 
-    public int CutCascades = 1;
-    public float ExplodeForce = 0;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    public int Slices = 1;
+    public float ExplosionForce = 0;
+    
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.T))
+            DestroyMesh();
     }
 
     public void DestroyMesh()
     {
         var originalMesh = GetComponent<MeshFilter>().mesh;
         originalMesh.RecalculateBounds();
-        var parts = new List<PartMesh>();
-        var subParts = new List<PartMesh>();
+        var partMeshes = new List<PartMesh>();
+        var tempPartMeshes = new List<PartMesh>();
 
         var mainPart = new PartMesh()
         {
@@ -42,13 +37,13 @@ public class MeshDestroy : MonoBehaviour
         for (int i = 0; i < originalMesh.subMeshCount; i++)
             mainPart.Triangles[i] = originalMesh.GetTriangles(i);
 
-        parts.Add(mainPart);
+        partMeshes.Add(mainPart);
 
-        for (var c = 0; c < CutCascades; c++)
+        for (var s = 0; s < Slices; s++)
         {
-            for (var i = 0; i < parts.Count; i++)
+            for (var i = 0; i < partMeshes.Count; i++)
             {
-                var bounds = parts[i].Bounds;
+                var bounds = partMeshes[i].Bounds;
                 bounds.Expand(0.5f);
 
                 var plane = new Plane(UnityEngine.Random.onUnitSphere, new Vector3(UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
@@ -56,17 +51,17 @@ public class MeshDestroy : MonoBehaviour
                                                                                    UnityEngine.Random.Range(bounds.min.z, bounds.max.z)));
 
 
-                subParts.Add(GenerateMesh(parts[i], plane, true));
-                subParts.Add(GenerateMesh(parts[i], plane, false));
+                tempPartMeshes.Add(GenerateMesh(partMeshes[i], plane, true));
+                tempPartMeshes.Add(GenerateMesh(partMeshes[i], plane, false));
             }
-            parts = new List<PartMesh>(subParts);
-            subParts.Clear();
+            partMeshes = new List<PartMesh>(tempPartMeshes);
+            tempPartMeshes.Clear();
         }
 
-        for (var i = 0; i < parts.Count; i++)
+        for (var i = 0; i < partMeshes.Count; i++)
         {
-            parts[i].MakeGameobject(this);
-            parts[i].GameObject.GetComponent<Rigidbody>().AddForceAtPosition(parts[i].Bounds.center * ExplodeForce, transform.position);
+            partMeshes[i].MakeGameobject(this);
+            partMeshes[i].GameObject.GetComponent<Rigidbody>().AddForceAtPosition(partMeshes[i].Bounds.center * ExplosionForce, transform.position);
         }
 
         Destroy(gameObject);

@@ -19,6 +19,7 @@ public class Player : MonoBehaviour, IDamageable
     public Vector3 direction;
     public float chargeCoolTime = 1.0f;
     public float bouncingParam = 100.0f;
+    public AudioClip hitSound;
 
     public Weapon weapon;
     //public GameObject chargeTarget;
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour, IDamageable
     private Rigidbody _rb;
     private SphereCollider _sphereCollider;
     private CharacterController _controller;
+    private AudioSource _audioSource;
     private float _health;
     private float _speed;
     private float _energy = 50.0f;
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         _health -= damageMessage.amount;
         Camera.main.gameObject.GetComponent<CamFollow>().CamShake(1.0f, 0.5f);
+        _audioSource.PlayOneShot(hitSound);
 
     }
     
@@ -221,10 +224,14 @@ public class Player : MonoBehaviour, IDamageable
         _rb = GetComponent<Rigidbody>();
         _sphereCollider = GetComponent<SphereCollider>();
         _controller = GetComponent<CharacterController>();
+        _audioSource = GetComponent<AudioSource>();
         _health = maxHealth;
         _level = 1;
         _speed = speed;
         _nextChargeTime = chargeCoolTime;
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Start is called before the first frame update

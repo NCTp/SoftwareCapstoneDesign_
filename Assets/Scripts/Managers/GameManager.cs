@@ -28,9 +28,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        
         _stage = 1;
     }
     public void AddScore(float points)

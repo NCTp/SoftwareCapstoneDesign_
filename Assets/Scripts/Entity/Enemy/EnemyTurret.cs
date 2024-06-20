@@ -10,9 +10,12 @@ public class EnemyTurret : MonoBehaviour
     public float distance = 100.0f;
     public float fireRate = 2.0f;
     public float attackCoolTime = 2.0f;
+    public AudioClip[] fireSounds;
+    public GameObject deadEffect;
 
     private Player _player;
     private LineRenderer _lineRenderer;
+    private AudioSource _audioSource;
     private float _fireTime = 0.0f;
     private Vector3 _dir;
 
@@ -23,12 +26,15 @@ public class EnemyTurret : MonoBehaviour
         GameObject _projectile = Instantiate(projectile, muzzle.transform.position, muzzle.transform.rotation);
         //_projectile.GetComponent<Rigidbody>().velocity = _dir * _projectile.GetComponent<Projectile>().speed;
         _projectile.GetComponent<Projectile>().SetDirection(_dir);
+        int temp = Random.Range(0, 3);
+        _audioSource.PlayOneShot(fireSounds[temp]);
     }
 
     void Awake()
     {
         _lineRenderer = muzzle.GetComponent<LineRenderer>();
         _lineRenderer.enabled = false;
+        _audioSource = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()

@@ -152,9 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed99a5a353587614696d13d970b829e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CutCascades: 3
-  ExplodeForce: 1000
-  MaxDestroyLevel: 3
+  Slices: 3
+  ExplosionForce: 3000
 --- !u!114 &9110099871959533161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +201,7 @@ MonoBehaviour:
   bodies: []
   lazerCollider: {fileID: 667450088926545981, guid: 94d8a347ca985df42a17fe360d44f80c, type: 3}
   mine: {fileID: 793765697677509300, guid: f1d4340f5ef2e5b47a7269dc5e9ce311, type: 3}
+  waveSpawner: []
   speed: 150
   rotationNumber: 3
   idleTime: 3

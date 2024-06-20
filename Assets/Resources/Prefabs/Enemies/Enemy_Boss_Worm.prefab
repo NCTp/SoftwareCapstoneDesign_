@@ -106,6 +106,10 @@ PrefabInstance:
       propertyPath: Boss
       value: 
       objectReference: {fileID: 2674576518580910324}
+    - target: {fileID: 2624778066510139880, guid: 8467cfb5a4c551c4aa050c3431942370, type: 3}
+      propertyPath: destroyEffect
+      value: 
+      objectReference: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4, type: 3}
     - target: {fileID: 6026738704151446672, guid: 8467cfb5a4c551c4aa050c3431942370, type: 3}
       propertyPath: m_Layer
       value: 8

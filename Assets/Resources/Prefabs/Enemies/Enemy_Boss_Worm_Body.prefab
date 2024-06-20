@@ -193,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPathRecorder: {fileID: 0}
   followSpeed: 150
+  stopDistance: 15
 --- !u!114 &8902207925325425674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,8 +233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed99a5a353587614696d13d970b829e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CutCascades: 5
-  ExplodeForce: 1000
+  Slices: 1
+  ExplosionForce: 0
 --- !u!114 &2624778066510139880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,10 +248,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 667450088926545981, guid: 44d1507e7e4a98a4595cbaa61b7e5f48, type: 3}
-  health: 10
-  repairInterval: 1
+  health: 1
+  repairInterval: 10
   fireRate: 2
   bodyMesh: {fileID: 3026851929428099864, guid: d1a7dc68217c3f241a2ef9344f024ac1, type: 3}
+  bodyMesh2: {fileID: 3026851929428099864, guid: 53beee3f6ce5f744db1e7add3e6314bc, type: 3}
+  destroyEffect: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4, type: 3}
   muzzle_L: {fileID: 5923924138514844236}
   muzzle_R: {fileID: 3733799507012882103}
   Boss: {fileID: 0}

@@ -45,7 +45,7 @@ namespace EnemyWorm
         // Update is called once per frame
         void Update()
         {
-        
+
         }
         public void IdleWorm()
         {
@@ -68,6 +68,11 @@ namespace EnemyWorm
             {
                 transform.rotation = Quaternion.LookRotation(new Vector3(0.0f,12.0f,0.0f) - transform.position);
                 Debug.Log("Detected" + other.gameObject.name);
+            }
+
+            if (other.gameObject.CompareTag("Player"))
+            {
+                other.gameObject.GetComponent<Player>().GetDamage(new DamageMessage(gameObject, 5.0f));
             }
         }
     }

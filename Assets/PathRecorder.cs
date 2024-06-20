@@ -7,6 +7,7 @@ public class PathRecorder : MonoBehaviour
     public List<Vector3> pathPositions = new List<Vector3>();
 
     public float recordInterval = 0.1f;
+    
 
     private float recordTimer = 0.0f;
     

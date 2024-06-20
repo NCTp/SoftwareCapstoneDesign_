@@ -8,16 +8,21 @@ public class Mine : MonoBehaviour
 {
 
     public GameObject explodeEffect;
+    public AudioClip explosionSound;
+
+    private AudioSource _audioSource;
 
 
     void Explode()
     {
+        _audioSource.PlayOneShot(explosionSound);
         GameObject _explodeEffect = Instantiate(explodeEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
     void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -17,6 +16,8 @@ public class EnemyWormBody : MonoBehaviour, IDamageable
     public float fireRate = 2.0f;
     private float _fireTimer = 0.0f;
     public GameObject bodyMesh;
+    public GameObject bodyMesh2;
+    public GameObject destroyEffect;
     
     private Player _player;
     private GameObject _bodyMesh;
@@ -40,6 +41,8 @@ public class EnemyWormBody : MonoBehaviour, IDamageable
             {
                 damageMessage.damager.gameObject.GetComponent<Player>().ResetCoolTime();
             }
+
+            Instantiate(destroyEffect, transform.position, Quaternion.identity);
             Boss.GetDamage(new DamageMessage(gameObject, health));
         }
     }
@@ -91,6 +94,7 @@ public class EnemyWormBody : MonoBehaviour, IDamageable
             if (CurrentHealth <= 0)
             {
                 _isDestroyed = true;
+                //GameObject _bodyMesh2 = Instantiate(bodyMesh2, transform.position, Quaternion.identity);
                 _meshDestroy.DestroyMesh();
                 _sphereCollider.enabled = false;
             }
@@ -114,6 +118,13 @@ public class EnemyWormBody : MonoBehaviour, IDamageable
                 _repairTimer = 0.0f;
 
             }
+        }
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<Player>().GetDamage(new DamageMessage(gameObject, 5.0f));
         }
     }
 
